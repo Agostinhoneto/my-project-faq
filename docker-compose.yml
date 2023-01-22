@@ -70,10 +70,25 @@ services:
         volumes:
         - 'jenkins_home:/var/jenkins_home'
         - '/var/run/docker.sock:/var/run/docker.sock'
-volumes:
-  jenkins_home:
-    driver: local
 
+    sonarqube:
+        image: sonarqube:community
+        hostname: sonarqube
+        container_name: sonarqube
+        ports:
+            - "9000:9000"
+        volumes:
+            - sonarqube_data:/opt/sonarqube/data
+            - sonarqube_extensions:/opt/sonarqube/extensions
+            - sonarqube_logs:/opt/sonarqube/logs
+           
+volumes:
+    jenkins_home:
+        driver: local
+    sonarqube_data:
+    sonarqube_extensions:
+    sonarqube_logs:
+   
 networks:
     laravel-9:
         driver: bridge
