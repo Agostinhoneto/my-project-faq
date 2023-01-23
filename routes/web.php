@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $users = DB::table('teste')->get();
+    dd($users);
     return view('welcome');
-    echo "oiiiiidfdfsddfs";
+    
 });
