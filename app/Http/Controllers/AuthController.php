@@ -1,11 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Services\Auth\LoginService;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException as ExceptionsJWTException;
@@ -25,7 +21,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         (new UserService())->register($request);
-            return response()->json(['Usuário Cadastrado'], 200);
+        return response()->json(['Usuário Cadastrado com sucesso'], 200);
      
     }
 
