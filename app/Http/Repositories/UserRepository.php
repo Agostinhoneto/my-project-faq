@@ -15,9 +15,9 @@ class UserRepository{
     
     public function save($name, $email,$password){
         
-        $user = new $this->user;        
+        $user = new $this->user;
         $user->name = $name;
-        $user->name = $email;
+        $user->email = $email;
         $user->password = $password;    
         $user->save();
         return $user->fresh();

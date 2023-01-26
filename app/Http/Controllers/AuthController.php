@@ -9,51 +9,36 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth;
 use App\Services\UserService;
 use Exception;
+use Illuminate\Support\Facades\Crypt;
 
 class AuthController extends Controller
 {
 
     public function __construct(private UserService $userService)
     {
-       // $this->loginService = $loginService;
         $this->middleware('auth:api', ['except' => ['login','register','store']]);
     }
 
     public function register(Request $request)
-    {
-        /*
-        $validator = Validator::make($request, [
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6|max:50'
-        ]);
-
-        //Send failed response if request is not valid
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 400);
-        }
-        */
-        $result = ['status' => 200];
-    
+    {      
         $name = $request->input('name');
         $email = $request->input('email');
-        $password = $request->input('password');
-       
+        $password = Crypt::encryptString('password');
         try{
-            $result1 = $this->userService->register(
-                name:$name,
-                email:$email,
-                password:$password
-            );
+            $result = $this->userService->register(
+            $name,
+            $email,
+            $password);
         }catch(Exception $e){
             $result = [
                 'status' => 500,
                 'error' => $e->getMessage()
             ];
         }
-        //(new UserService())->register($request);
-        //return response()->json(['Usuário Cadastrado com sucesso'], 200);
-     
+    }
+
+    public function show(){
+        
     }
 
     public function login(Request $request)
