@@ -1,11 +1,8 @@
 <?php
-
-namespace App\Repositories;
-
+namespace App\Http\Repositories;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Response;
+
 
 class UserRepository{
     
@@ -15,23 +12,18 @@ class UserRepository{
     {
         $this->user = $user;
     }
-
-    public function register(Request $request)
-    {
-        $data = $request->only('name', 'email', 'password');
-        $validator = Validator::make($data, [
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6|max:50'
-        ]);
-
-        //Send failed response if request is not valid
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
-        }
+    
+    public function save($name, $email,$password){
+        
+        $user = new $this->user;        
+        $user->name = $name;
+        $user->name = $email;
+        $user->password = $password;    
+        $user->save();
+        return $user->fresh();
 
         //Request is valid, create new user
-        $user = User::create([
+      /*  $user = User::create([
         	'name' => $request->name,
         	'email' => $request->email,
         	'password' => bcrypt($request->password)
@@ -42,6 +34,6 @@ class UserRepository{
             'success' => true,
             'message' => 'User created successfully',
             'data' => $user
-        ], Response::HTTP_OK);
+        ], Response::HTTP_OK);*/
     }
 }

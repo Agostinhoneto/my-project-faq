@@ -8,6 +8,7 @@ use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException as ExceptionsJWTException
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth;
 use App\Services\UserService;
+use Exception;
 
 class AuthController extends Controller
 {
@@ -20,8 +21,38 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        (new UserService())->register($request);
-        return response()->json(['Usuário Cadastrado com sucesso'], 200);
+        /*
+        $validator = Validator::make($request, [
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:6|max:50'
+        ]);
+
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 400);
+        }
+        */
+        $result = ['status' => 200];
+    
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $password = $request->input('password');
+       
+        try{
+            $result1 = $this->userService->register(
+                name:$name,
+                email:$email,
+                password:$password
+            );
+        }catch(Exception $e){
+            $result = [
+                'status' => 500,
+                'error' => $e->getMessage()
+            ];
+        }
+        //(new UserService())->register($request);
+        //return response()->json(['Usuário Cadastrado com sucesso'], 200);
      
     }
 

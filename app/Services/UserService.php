@@ -1,10 +1,6 @@
 <?php
 namespace App\Services;
-use App\Models\User;
-use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Repositories\UserRepository;
 
 class UserService {
     
@@ -15,7 +11,11 @@ class UserService {
         $this->userRepository = $userRepository;
     }
 
-   
+    public function register($name, $email,$password)
+    {
+        $result = $this->userRepository->save($name, $email,$password);
+        return $result;
+    }
  
 }
 ?>
