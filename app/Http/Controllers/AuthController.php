@@ -16,7 +16,36 @@ class AuthController extends Controller
 
     public function __construct(private UserService $userService)
     {
-        $this->middleware('auth:api', ['except' => ['login','register','store']]);
+        // $this->middleware('auth:api', ['except' => ['login','register','store']]);
+    }
+
+    public function index(){
+        $result = ['status' => 200];
+        
+        try{
+            $result['data'] = $this->userService->getAll(); 
+        }   
+        catch(Exception $e){
+            $result = [
+                'status' => 500,
+                'error' =>$e->getMessage()
+            ];
+        }
+        return response()->json($result,$result['status']);
+    }
+
+    public function show($id){
+        $result = ['status' =>200];
+        try{
+            $result['data'] = $this->userService->getById($id);
+        }
+        catch(Exception $e){
+            $result = [
+                'status' =>500,
+                'error' => $e->getMessage()
+            ];
+        }
+        return response()->json($result,$result['status']);
     }
 
     public function register(Request $request)
@@ -37,10 +66,42 @@ class AuthController extends Controller
         }
     }
 
-    public function show(){
+    public function update(Request $request,$id)
+    {
+      //  $id = $request->input('id');
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $password = Crypt::encryptString('password');
         
+        try{
+            $result = $this->userService->update(
+            $id,    
+            $name,
+            $email,
+            $password);
+        }catch(Exception $e){
+            $result = [
+                'status' => 500,
+                'error' => $e->getMessage()
+            ];
+        }
+        return response()->json($result,$result['status']);
     }
 
+    public function destroy($id){
+        $result = ['status' => 200];
+        try{
+            $result['data'] = $this->userService->deleteById($id);
+        }catch(Exception $e){
+            $result =[
+               'status' => 500,
+               'error'  =>$e->getMessage()
+            ];
+        }
+        return response()->json($result,$result['status']);
+    }
+
+    
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');

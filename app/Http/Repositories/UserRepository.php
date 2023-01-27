@@ -13,7 +13,16 @@ class UserRepository{
         $this->user = $user;
     }
     
-    public function save($name, $email,$password){
+    public function getAllUser(){
+        return $this->user->get();
+    }
+
+    public function getById($id){
+        return $this->user->where('id',$id)->get();
+    }
+
+    public function save($name, $email,$password)
+    {
         
         $user = new $this->user;
         $user->name = $name;
@@ -21,19 +30,24 @@ class UserRepository{
         $user->password = $password;    
         $user->save();
         return $user->fresh();
+    }
 
-        //Request is valid, create new user
-      /*  $user = User::create([
-        	'name' => $request->name,
-        	'email' => $request->email,
-        	'password' => bcrypt($request->password)
-        ]);
+    public function update($id,$name,$email,$password)
+    {   
+        dd($id);
+        $user = new $this->user->find($id);
+        $user->name = $name;
+        $user->email = $email;
+        $user->password = $password;    
+        $user->update();
+        return $user->fresh();
+    }    
 
-        //User created, return success response
-        return response()->json([
-            'success' => true,
-            'message' => 'User created successfully',
-            'data' => $user
-        ], Response::HTTP_OK);*/
+    public function delete($id)
+    {
+        $user = $this->user->find($id);
+        $user->delete();
+
+        return $user;
     }
 }

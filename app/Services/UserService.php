@@ -1,6 +1,10 @@
 <?php
 namespace App\Services;
 use App\Http\Repositories\UserRepository;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 
 class UserService {
     
@@ -11,10 +15,42 @@ class UserService {
         $this->userRepository = $userRepository;
     }
 
+    public function getAll(){
+        return $this->userRepository
+        ->getAllUser();
+    }
+    public function getById($id){
+        return $this->userRepository
+        ->getById($id);
+    }
     public function register($name, $email,$password)
     {
-        $result = $this->userRepository->save($name, $email,$password);
+        $result = $this->userRepository
+        ->save($name, $email,$password);
         return $result;
+    }
+
+    public function update($name, $email,$password,$id)
+    {
+        $result = $this->userRepository
+        ->update($name, $email,$password,$id);
+        return $result;
+    }
+
+    public function deleteById($id){
+    //    dd($id);
+        DB::beginTransaction();
+        try{
+            $user = $this->userRepository->delete($id);
+        }catch(Exception $e){
+            DB::roolBack();
+            Log::info($e->getMessage());
+            throw new InvalidArgumentException('Não pode ser deletado');
+        }
+
+        DB::commit();
+
+        return $user;
     }
  
 }
