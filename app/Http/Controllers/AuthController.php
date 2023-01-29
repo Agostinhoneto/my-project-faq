@@ -64,6 +64,7 @@ class AuthController extends Controller
                 'error' => $e->getMessage()
             ];
         }
+        return $result;
     }
 
     public function update(Request $request,$id)
