@@ -68,24 +68,19 @@ class AuthController extends Controller
 
     public function update(Request $request,$id)
     {
-      //  $id = $request->input('id');
+        $id = $request->input('id');
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
-        
         try{
-            $result = $this->userService->update(
-            $id,    
-            $name,
-            $email,
-            $password);
+            $result = $this->userService->update($id,$name,$email,$password);
         }catch(Exception $e){
             $result = [
                 'status' => 500,
                 'error' => $e->getMessage()
             ];
         }
-        return response()->json($result,$result['status']);
+        return $result;
     }
 
     public function destroy($id){

@@ -30,15 +30,14 @@ class UserService {
         return $result;
     }
 
-    public function update($name, $email,$password,$id)
+    public function update($id,$name, $email,$password)
     {
         $result = $this->userRepository
-        ->update($name, $email,$password,$id);
+        ->update($id,$name,$email,$password);
         return $result;
     }
 
     public function deleteById($id){
-    //    dd($id);
         DB::beginTransaction();
         try{
             $user = $this->userRepository->delete($id);
@@ -47,9 +46,7 @@ class UserService {
             Log::info($e->getMessage());
             throw new InvalidArgumentException('Não pode ser deletado');
         }
-
         DB::commit();
-
         return $user;
     }
  

@@ -34,8 +34,8 @@ class UserRepository{
 
     public function update($id,$name,$email,$password)
     {   
-        dd($id);
-        $user = new $this->user->find($id);
+       
+        $user = $this->user->find($id);
         $user->name = $name;
         $user->email = $email;
         $user->password = $password;    
