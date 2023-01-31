@@ -53,8 +53,9 @@ class AuthController extends Controller
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
+        $result = ['status' =>200];
         try{
-            $result = $this->userService->register(
+            $result['data'] =  $this->userService->register(
             $name,
             $email,
             $password);
@@ -64,7 +65,7 @@ class AuthController extends Controller
                 'error' => $e->getMessage()
             ];
         }
-        return $result;
+        return response()->json($result,$result['status']);
     }
 
     public function update(Request $request,$id)
@@ -73,15 +74,16 @@ class AuthController extends Controller
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
+        $result = ['status' =>200];
         try{
-            $result = $this->userService->update($id,$name,$email,$password);
+            $result['data'] = $this->userService->update($id,$name,$email,$password);
         }catch(Exception $e){
             $result = [
                 'status' => 500,
                 'error' => $e->getMessage()
             ];
         }
-        return $result;
+        return response()->json($result,$result['status']);
     }
 
     public function destroy($id){
@@ -117,14 +119,14 @@ class AuthController extends Controller
             if (!$token = FacadesJWTAuth::attempt($credentials)) {
                 return response()->json([
                 	'success' => false,
-                	'message' => 'Login credentials are invalid.',
+                	'message' => 'Credenciais Invalidas.',
                 ], 400);
             }
         } catch (ExceptionsJWTException $e) {
     	return $credentials;
             return response()->json([
                 	'success' => false,
-                	'message' => 'Could not create token.',
+                	'message' => 'não foi possível criar Token.',
                 ], 500);
         }
  	   //Token created, return with success response and jwt token

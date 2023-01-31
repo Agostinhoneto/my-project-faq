@@ -27,8 +27,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('get_user', 'get_user');
     Route::get('index','index');
     Route::get('show/{id}','show');
-    Route::get('update/{id}','update'); 
-    Route::get('destroy/{id}','destroy');
+    Route::put('update/{id}','update'); 
+    Route::delete('destroy/{id}','destroy');
 });
 
 
