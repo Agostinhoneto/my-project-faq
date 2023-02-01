@@ -11,7 +11,7 @@ use App\Services\UserService;
 use Exception;
 use Illuminate\Support\Facades\Crypt;
 
-class AuthController extends Controller
+class UserController extends Controller
 {
 
     public function __construct(private UserService $userService)
