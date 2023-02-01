@@ -98,11 +98,12 @@ class AuthController extends Controller
         $result = ['status' => 200];
         try{
             $result['data'] = $this->userService->deleteById($id);
-        }catch(Exception $e){
+        }
+        catch(Exception $e){
            return response()->json([
                 	'success' => false,
-                	'message' => 'não foi possível criar Email.',
-                ], 500);
+                	'message' => 'nao foi possivel excluir Usuario'. '$erro',
+                ]);
         }
         return response()->json($result,$result['status']);
     }
