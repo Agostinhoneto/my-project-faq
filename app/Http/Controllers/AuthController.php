@@ -22,10 +22,10 @@ class AuthController extends Controller
     public function index(){
         $result = ['status' => 200];
         
-        try{
+        try {
             $result['data'] = $this->userService->getAll(); 
         }   
-        catch(Exception $e){
+        catch(Exception $e) {
             $result = [
                 'status' => 500,
                 'error' =>$e->getMessage()
@@ -62,12 +62,12 @@ class AuthController extends Controller
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
         $result = ['status' =>200];
-        try{
+        try {
             $result['data'] =  $this->userService->register(
             $name,
             $email,
             $password);
-        }catch(Exception $e){
+        } catch(Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'não foi possível criar email.',
@@ -83,9 +83,9 @@ class AuthController extends Controller
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
         $result = ['status' =>200];
-        try{
+        try {
             $result['data'] = $this->userService->update($id,$name,$email,$password);
-        }catch(Exception $e){
+        } catch(Exception $e) {
             $result = [
                 'status' => 500,
                 'error' => $e->getMessage()
@@ -96,10 +96,10 @@ class AuthController extends Controller
 
     public function destroy($id){
         $result = ['status' => 200];
-        try{
+        try {
             $result['data'] = $this->userService->deleteById($id);
         }
-        catch(Exception $e){
+        catch(Exception $e) {
            return response()->json([
                 	'success' => false,
                 	'message' => 'nao foi possivel excluir Usuario'. '$erro',
