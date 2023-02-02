@@ -16,7 +16,7 @@ class UserController extends Controller
 
     public function __construct(private UserService $userService)
     {
-        // $this->middleware('auth:api', ['except' => ['login','register','store']]);
+         $this->middleware('auth:api', ['except' => ['login','register','store']]);
     }
 
     public function index(){

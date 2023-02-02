@@ -16,7 +16,7 @@ class AuthController extends Controller
 
     public function __construct(private UserService $userService)
     {
-        // $this->middleware('auth:api', ['except' => ['login','register','store']]);
+      // $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     public function index(){
@@ -108,7 +108,7 @@ class AuthController extends Controller
         return response()->json($result,$result['status']);
     }
 
-    
+ 
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');

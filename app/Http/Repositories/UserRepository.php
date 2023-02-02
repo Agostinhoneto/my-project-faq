@@ -46,9 +46,16 @@ class UserRepository{
     public function delete($id)
     {
         if(!empty($id)){ 
-            $user = $this->user->find($id);
-            $user->delete();
-        }
+            if($id == null)
+            {
+                return "erro";
+            }
+            else{
+                $user = $this->user->find($id);
+                $user->delete();
+            }
+        } 
+    
         return $user;
        
     }
