@@ -51,13 +51,6 @@ class AuthController extends Controller
     public function register(Request $request)
     {      
 
-        $credentials = $request->only('email', 'password');
-        
-        $validator = Validator::make($credentials, [
-            'email' => 'required|unique|email',
-            'password' => 'required|string|min:6|max:50'
-        ]);
-       
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
