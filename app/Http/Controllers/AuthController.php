@@ -125,11 +125,10 @@ class AuthController extends Controller
                 ], 400);
             }
         } catch (ExceptionsJWTException $e) {
-    	return $credentials;
             return response()->json([
-                	'success' => false,
-                	'message' => 'não foi possível criar Token.',
-                ], 500);
+              	'success' => false,
+               	'message' => 'não foi possível criar Token.',
+           ], 500);
         }
  	   //Token created, return with success response and jwt token
         return response()->json([
