@@ -40,13 +40,14 @@ class UserService {
     public function deleteById($id){
         DB::beginTransaction();
         try{
+            DB::commit();
             $user = $this->userRepository->delete($id);
-        }catch(Exception $e){
+        }
+        catch(Exception $e){
             DB::roolBack();
             Log::info($e->getMessage());
             throw new InvalidArgumentException('Não pode ser deletado');
         }
-        DB::commit();
         return $user;
     }
  
