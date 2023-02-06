@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\UserFormRequest;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
@@ -48,7 +50,7 @@ class AuthController extends Controller
         return response()->json($result,$result['status']);
     }
 
-    public function register(Request $request)
+    public function register(UserFormRequest $request)
     {      
 
         $name = $request->input('name');

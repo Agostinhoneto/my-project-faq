@@ -16,9 +16,6 @@ use Illuminate\Contracts\View\View;
 */
 
 Route::get('/', function () {
-
-    $users = DB::table('users')->get();
-    dd($users);
     return view('welcome');
 });
 
