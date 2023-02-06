@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,17 +21,27 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
-    Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
+    Route::post('register', 'register');  
     Route::get('get_user', 'get_user');
     Route::get('index','index');
-    Route::get('show/{id}','show');
-    Route::get('update/{id}','update'); 
-    Route::get('destroy/{id}','destroy');
+   Route::get('show/{id}','show');
+    Route::put('update/{id}','update'); 
+   Route::delete('destroy/{id}','destroy');
 });
 
+/*
+Route::controller(UserController::class)->group(function () {
+    Route::post('register', 'register');
+    Route::post('refresh', 'refresh');
+    Route::get('index','index');
+    Route::get('show/{id}','show');
+    Route::put('update/{id}','update'); 
+    Route::delete('destroy/{id}','destroy');
+});
 
+*/
 
 
 

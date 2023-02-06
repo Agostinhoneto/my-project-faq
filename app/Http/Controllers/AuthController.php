@@ -16,16 +16,16 @@ class AuthController extends Controller
 
     public function __construct(private UserService $userService)
     {
-        // $this->middleware('auth:api', ['except' => ['login','register','store']]);
+      // $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     public function index(){
         $result = ['status' => 200];
         
-        try{
+        try {
             $result['data'] = $this->userService->getAll(); 
         }   
-        catch(Exception $e){
+        catch(Exception $e) {
             $result = [
                 'status' => 500,
                 'error' =>$e->getMessage()
@@ -50,21 +50,23 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {      
+
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
-        try{
-            $result = $this->userService->register(
+        $result = ['status' =>200];
+        try {
+            $result['data'] =  $this->userService->register(
             $name,
             $email,
             $password);
-        }catch(Exception $e){
-            $result = [
-                'status' => 500,
-                'error' => $e->getMessage()
-            ];
+        } catch(Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'não foi possível criar email.',
+            ], 500);
         }
-        return $result;
+        return response()->json($result,$result['status']);
     }
 
     public function update(Request $request,$id)
@@ -73,31 +75,33 @@ class AuthController extends Controller
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
-        try{
-            $result = $this->userService->update($id,$name,$email,$password);
-        }catch(Exception $e){
+        $result = ['status' =>200];
+        try {
+            $result['data'] = $this->userService->update($id,$name,$email,$password);
+        } catch(Exception $e) {
             $result = [
                 'status' => 500,
                 'error' => $e->getMessage()
             ];
         }
-        return $result;
+        return response()->json($result,$result['status']);
     }
 
     public function destroy($id){
         $result = ['status' => 200];
-        try{
+        try {
             $result['data'] = $this->userService->deleteById($id);
-        }catch(Exception $e){
-            $result =[
-               'status' => 500,
-               'error'  =>$e->getMessage()
-            ];
+        }
+        catch(Exception $e) {
+           return response()->json([
+                	'success' => false,
+                	'message' => 'nao foi possivel excluir Usuario'. '$erro',
+                ]);
         }
         return response()->json($result,$result['status']);
     }
 
-    
+ 
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -117,15 +121,14 @@ class AuthController extends Controller
             if (!$token = FacadesJWTAuth::attempt($credentials)) {
                 return response()->json([
                 	'success' => false,
-                	'message' => 'Login credentials are invalid.',
+                	'message' => 'Credenciais Invalidas.',
                 ], 400);
             }
         } catch (ExceptionsJWTException $e) {
-    	return $credentials;
             return response()->json([
-                	'success' => false,
-                	'message' => 'Could not create token.',
-                ], 500);
+              	'success' => false,
+               	'message' => 'não foi possível criar Token.',
+           ], 500);
         }
  	   //Token created, return with success response and jwt token
         return response()->json([
