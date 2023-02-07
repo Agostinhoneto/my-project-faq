@@ -2,14 +2,17 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Spatie\Permission\Traits\HasRoles;
 
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -40,6 +43,23 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function permissao():BelongsToMany
+    {
+        return $this->belongsToMany(Permissao::class);
+    }
+
+    public function givePermissiontTo(string $permisson):void
+    {
+        $p = Permissao::query()->firstOrCreate(compact('permissao')); 
+        $this->permissao()->attach($p);
+    }
+
+    public function hasPermissionTo(string $permisson):bool
+    {
+        return $this->permissao()->where('permissao',$permisson)->exists();
+    }
+
 
   /**
      * Get the identifier that will be stored in the subject claim of the JWT.
