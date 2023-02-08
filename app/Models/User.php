@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 
 
@@ -51,7 +52,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function givePermissiontTo(string $permisson):void
     {
-        $p = Permissao::query()->firstOrCreate(compact('permissao')); 
+        $p = Permission::query()->firstOrCreate(compact('permissao')); 
         $this->permissao()->attach($p);
     }
 
