@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Contracts\View\View;
 
 /*
@@ -30,3 +31,13 @@ Route::controller(AuthController::class)->group(function () {
 
 
 require __DIR__.'/auth.php';
+
+Route::resource('roles',RoleController::class);
+
+/*
+Route::controller(RoleController::class)->group(function(){
+    Route::get('/roles','index')->middleware('can:read roles');
+    Route::get('/roles/create','create')->middleware('can:create roles');
+
+});
+*/
