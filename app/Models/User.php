@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
-
+use App\Models\Permission;
+use App\Models\Role;
 
 class User extends Authenticatable implements JWTSubject
 {

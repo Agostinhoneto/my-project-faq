@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -11,16 +14,38 @@ class RoleController extends Controller
         $this->middleware('can:create role')->only('create');
     }
 
+
+    public function index()
+    {
+        $roles = Role::all();
+ 
+        $permissions = Permission::all();
+        return View('add_roles')->with(array('roles'=>$roles,'permissions'=>$permissions));
+    }
+
+    public function store(Request $request)
+    {
+        
+        $role_id = $request->role_id;
+        $role = Role::find($role_id);
+        if(count($role)>0){
+            $checkRole = Role::where('id',$role_id)->withCount('permissions')->get()->toArray();
+            if($checkRole[0]['permissions_count']>0){
+               $role->permissions()->detach();//delete all relationship in role_permission
+            }
+            $role->permissions()->attach($request->permissions);//add list permissions
+            return redirect()->route('home');
+             
+        }
+        return redirect()->route('home');
+ 
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        //$this->authorize('read role');
-    }
-
+   
     /**
      * Show the form for creating a new resource.
      *
@@ -31,17 +56,7 @@ class RoleController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
+ 
     /**
      * Display the specified resource.
      *
