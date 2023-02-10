@@ -61,6 +61,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->permissao()->where('permissao',$permisson)->exists();
     }
 
+    public function roles(){
+        return $this->belongsToMany(Role::class,'user_role');
+    }
+    
+    public function groups(){
+        return $this->belongsToMany(Group::class,'user_group');
+    }
 
   /**
      * Get the identifier that will be stored in the subject claim of the JWT.

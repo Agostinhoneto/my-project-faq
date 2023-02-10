@@ -1,10 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\User;
 use Illuminate\Http\Request;
-use Spatie\Permission\Traits\HasRoles;
 
 class RoleController extends Controller
 {
@@ -21,8 +18,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-    //   $this->authorize('read role');
-       return "deu certo";
+        //$this->authorize('read role');
     }
 
     /**
@@ -32,7 +28,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return "oiii";
+
     }
 
     /**
