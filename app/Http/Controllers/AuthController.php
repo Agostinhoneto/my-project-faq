@@ -22,7 +22,7 @@ class AuthController extends Controller
     }
 
     public function index(){
-        $result = ['status' => 200];
+        $result = ['status' => Response::HTTP_OK];
         
         try {
             $result['data'] = $this->userService->getAll(); 

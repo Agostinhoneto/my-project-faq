@@ -44,23 +44,7 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function permissao():BelongsToMany
-    {
-        return $this->belongsToMany(Permissao::class);
-    }
-
-    public function givePermissiontTo(string $permisson):void
-    {
-        $p = Permission::query()->firstOrCreate(compact('permissao')); 
-        $this->permissao()->attach($p);
-    }
-
-    public function hasPermissionTo(string $permisson):bool
-    {
-        return $this->permissao()->where('permissao',$permisson)->exists();
-    }
-
+   
     public function roles(){
         return $this->belongsToMany(Role::class,'user_role');
     }

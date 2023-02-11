@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class UserFormRequest extends FormRequest
 {
@@ -25,16 +27,26 @@ class UserFormRequest extends FormRequest
     {
         return [
            'name' =>['required','min:3'],
-           'email' =>['required','min:3']
+           'email' =>['required','min:3','email']
         ];
     }
 
+    
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success'   => false,
+            'message'   => 'Validation errors',
+            'data'      => $validator->errors()
+        ]));
+    }
+    
     public function messages()
     {
         return [
            'name.required' => 'O campo Nome é obrigatório',
            'email.required'  => 'O campo Email é obrigatório',
+           'email.email'  => 'O campo Email não é valido',           
         ];
     }
-    
 }

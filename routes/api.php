@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,19 +29,17 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('show/{id}','show');
     Route::put('update/{id}','update'); 
     Route::delete('destroy/{id}','destroy');
+    
 });
 
-/*
+
 Route::controller(UserController::class)->group(function () {
-    Route::post('register', 'register');
-    Route::post('refresh', 'refresh');
-    Route::get('index','index');
-    Route::get('show/{id}','show');
-    Route::put('update/{id}','update'); 
-    Route::delete('destroy/{id}','destroy');
+    Route::post('storeRole', 'storeRole');
+    Route::get('indexRole', 'indexRole');
 });
 
-*/
+
+
 
 
 

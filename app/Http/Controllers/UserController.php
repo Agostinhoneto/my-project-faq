@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
@@ -14,13 +17,18 @@ use Illuminate\Support\Facades\Crypt;
 class UserController extends Controller
 {
 
+     
+
     public function __construct(private UserService $userService)
     {
-        // $this->middleware('auth:api', ['except' => ['login','register','store']]);
+       // $this->middleware('auth:api', ['except' => ['login','register','store']]);
+       
     }
 
-    public function index(){
-        $result = ['status' => 200];
+    public function index()
+    {
+      
+      $result = ['status' => 200];
         
         try{
             $result['data'] = $this->userService->getAll(); 
@@ -106,4 +114,28 @@ class UserController extends Controller
         }
         return response()->json($result,$result['status']);
     }
+
+    public function indexRole(Request $request)
+    {
+      
+        $users = User::all();
+        $roles = Role::all();
+        return $roles ; 
+       // return response()->json($users,$roles);
+     
+        //return View('add_roles_user')->with(array('users'=>$users,'roles'=>$roles));
+    }
+
+    public function storeRole(Request $request)
+    {
+        $role = Role::find($request->role_id);
+        $role->users()->detach($request->users);
+        $role->users()->attach($request->users);
+        dd($role);
+
+        return response()->json($role);
+        // return redirect()->route('home');
+    }
+    
+   
 }
