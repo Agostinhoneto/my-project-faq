@@ -114,28 +114,5 @@ class UserController extends Controller
         }
         return response()->json($result,$result['status']);
     }
-
-    public function indexRole(Request $request)
-    {
-      
-        $users = User::all();
-        $roles = Role::all();
-        return $roles ; 
-       // return response()->json($users,$roles);
-     
-        //return View('add_roles_user')->with(array('users'=>$users,'roles'=>$roles));
-    }
-
-    public function storeRole(Request $request)
-    {
-        $role = Role::find($request->role_id);
-        $role->users()->detach($request->users);
-        $role->users()->attach($request->users);
-        dd($role);
-
-        return response()->json($role);
-        // return redirect()->route('home');
-    }
-    
    
 }

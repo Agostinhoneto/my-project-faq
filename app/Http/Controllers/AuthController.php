@@ -29,7 +29,7 @@ class AuthController extends Controller
         }   
         catch(Exception $e) {
             $result = [
-                'status' => 500,
+                'status' =>Response::HTTP_INTERNAL_SERVER_ERROR,
                 'error' =>$e->getMessage()
             ];
         }
@@ -37,13 +37,13 @@ class AuthController extends Controller
     }
 
     public function show($id){
-        $result = ['status' =>200];
+        $result = ['status' =>Response::HTTP_OK];
         try{
             $result['data'] = $this->userService->getById($id);
         }
         catch(Exception $e){
             $result = [
-                'status' =>500,
+                'status' =>Response::HTTP_INTERNAL_SERVER_ERROR,
                 'error' => $e->getMessage()
             ];
         }
@@ -52,11 +52,10 @@ class AuthController extends Controller
 
     public function register(UserFormRequest $request)
     {      
-
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
-        $result = ['status' =>200];
+        $result = ['status' =>Response::HTTP_OK];
         try {
             $result['data'] =  $this->userService->register(
             $name,
@@ -66,7 +65,8 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'não foi possível criar email.',
-            ], 500);
+            ],Response::HTTP_INTERNAL_SERVER_ERROR,
+        );
         }
         return response()->json($result,$result['status']);
     }
@@ -77,12 +77,12 @@ class AuthController extends Controller
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
-        $result = ['status' =>200];
+        $result = ['status' =>Response::HTTP_OK];
         try {
             $result['data'] = $this->userService->update($id,$name,$email,$password);
         } catch(Exception $e) {
             $result = [
-                'status' => 500,
+                'status' =>Response::HTTP_INTERNAL_SERVER_ERROR, 
                 'error' => $e->getMessage()
             ];
         }
@@ -90,7 +90,7 @@ class AuthController extends Controller
     }
 
     public function destroy($id){
-        $result = ['status' => 200];
+        $result = ['status' =>Response::HTTP_OK];
         try {
             $result['data'] = $this->userService->deleteById($id);
         }
@@ -114,8 +114,10 @@ class AuthController extends Controller
             'password' => 'required|string|min:6|max:50'
         ]);
         //Send failed response if request is not valid
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
+        if ($validator->fails()) 
+        {
+            return response()->json(['error' => $validator->messages()],
+            Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         //Request is validated
         //Crean token
@@ -130,7 +132,7 @@ class AuthController extends Controller
             return response()->json([
               	'success' => false,
                	'message' => 'não foi possível criar Token.',
-           ], 500);
+           ], );
         }
  	   //Token created, return with success response and jwt token
         return response()->json([
