@@ -36,6 +36,10 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(RoleController::class)->group(function () {
     Route::post('store', 'store');
     Route::get('index', 'index');
+    Route::get('attachUserRole/{userId}/roles/{role_name}','attachUserRole');
+    Route::get('getUserRole/{userId}/roles','getUserRole');
+    Route::post('attachPermission','attachPermission');
+
 });
 
 

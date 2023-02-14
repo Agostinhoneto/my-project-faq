@@ -59,6 +59,7 @@ class UserController extends Controller
     public function register(Request $request)
     {      
 
+        
         $credentials = $request->only('email', 'password');
         
         $validator = Validator::make($credentials, [
@@ -69,6 +70,8 @@ class UserController extends Controller
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
+
+
         $result = ['status' =>200];
         try{
             $result['data'] =  $this->userService->register(
