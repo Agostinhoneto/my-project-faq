@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use App\Models\User;
 use App\Models\Role;
-use App\Models\Permission;
-
 use Illuminate\Http\Request;
-
 class RoleController extends Controller
 {
 
@@ -35,17 +33,21 @@ class RoleController extends Controller
         return User::find($userId)->roles;
     }
 
-    public function attachPermission(Request $request){
-        
+    public function attachPermission(Request $request)
+    {
         $parameters = $request->only('permission','role');
         $permissionParam = $parameters['permission'];
         $roleParam = $parameters['role'];
-
+       
         $role = Role::where('name',$roleParam)->first();
         $permission = Permission::where('name',$permissionParam)->first();
         $role->attachPermission($permission);
-      
-        return $this->response()->json(200);
+        return $this->response()->json()->created();
+    }
+
+    public function getPermissions($roleParam){
+        $role = Role::where('name',$roleParam)->first();
+        return response()->json()->array($role->perms);
     }
 
     public function store(Request $request)
