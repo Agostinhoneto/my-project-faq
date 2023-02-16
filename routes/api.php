@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -20,8 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/login',[LoginController::class,'login']);
+
 Route::controller(AuthController::class)->group(function () {
-    Route::post('login', 'login');
+    //Route::post('login', 'login');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
     Route::post('register', 'register');  
@@ -30,7 +33,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('show/{id}','show');
     Route::put('update/{id}','update'); 
     Route::delete('destroy/{id}','destroy');
-    
 });
 
 Route::controller(RoleController::class)->group(function () {
@@ -40,7 +42,6 @@ Route::controller(RoleController::class)->group(function () {
     Route::get('getUserRole/{userId}/roles','getUserRole');
     Route::post('attachPermission','attachPermission');
     Route::get('getPermissions/{roleParam}','getPermissions');
-
 });
 
 
