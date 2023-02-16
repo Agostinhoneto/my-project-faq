@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserFormRequest;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
@@ -12,6 +14,7 @@ use PHPOpenSourceSaver\JWTAuth\JWTAuth;
 use App\Services\UserService;
 use Exception;
 use Illuminate\Support\Facades\Crypt;
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
@@ -52,6 +55,22 @@ class AuthController extends Controller
 
     public function register(UserFormRequest $request)
     {      
+
+        $user = User::create([
+            'name' =>$request->name,
+            'email' =>$request->name,
+            'password' =>bcrypt($request->password)
+        ]);
+       
+        $user_role = Role::where(['name' => 'admin'])->first();
+
+        if ($user_role){
+            $user->assignRole($user_role);
+        }
+
+        return new UserResource($user);
+
+        /*
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
@@ -69,6 +88,7 @@ class AuthController extends Controller
         );
         }
         return response()->json($result,$result['status']);
+        */
     }
 
     public function update(Request $request,$id)
