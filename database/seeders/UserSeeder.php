@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -59,8 +58,14 @@ class UserSeeder extends Seeder
         $user_role = Role::create(['name' => 'usuario']); 
        
         $user->assignRole($user_role);
+ 
         $user->givePermissionTo([
             $user_list,
         ]);
+
+        $user_role->givePermissionTo([
+            $user_list,
+        ]);
+ 
     }
 }

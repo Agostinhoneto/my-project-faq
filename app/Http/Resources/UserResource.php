@@ -6,7 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
 {
-   
     public function toArray($request)
     {
        return [
@@ -15,7 +14,7 @@ class UserResource extends JsonResource
         'email' =>$this->email,
         'token' =>$this->createToken("Token")->plainTextToken,
         'roles' =>$this->roles->pluck('name') ?? [],
-        'roles.permissions' => $this->getPermissionsViaRoles() ?? [],
+       // 'roles.permissions' => $this->getPermissionsViaRoles()->pluck('name') ?? [],
         'permissions' =>$this->permissions->pluck('name') ?? []
        ];
     }

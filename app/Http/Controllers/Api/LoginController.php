@@ -7,31 +7,27 @@ use App\Http\Helpers\Helper;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\Response;
-use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException as ExceptionsJWTException;
-use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
 
 class LoginController extends Controller
 {
     public function login(Request $request)
     {
+       
        if(!Auth::attempt($request->only('email','password')))
        {
-            Helper::sendError('email errado ou senhass');
+            Helper::sendError('email errado ou senha');
        }
+
        return new UserResource(auth()->user());
+
         /*
-    
         $credentials = $request->only('email', 'password');
-        
         //valid credential
         $validator = Validator::make($credentials, [
             'email' => 'required|email',
             'password' => 'required|string|min:6|max:50'
         ]);
 
-   
         //Send failed response if request is not valid
         if ($validator->fails()) 
         {
@@ -59,8 +55,6 @@ class LoginController extends Controller
             'token' => $token,
         ]);
           */
-    
-    }
-     
+    }     
 }
 
