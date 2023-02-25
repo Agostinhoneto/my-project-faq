@@ -61,9 +61,7 @@ class AuthController extends Controller
             'email' =>$request->email,
             'password' =>bcrypt($request->password)
         ]);
-       
         $user_role = Role::where(['name' => 'admin'])->first();
-
         if ($user_role){
             $user->assignRole($user_role);
         }
