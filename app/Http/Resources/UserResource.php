@@ -15,7 +15,6 @@ class UserResource extends JsonResource
         'token' =>$this->createToken("Token")->plainTextToken,
         'roles' =>$this->roles->pluck('name') ?? [],
         'roles.permissions' => $this->getPermissionsViaRoles()->pluck('name') ?? [],
-        'permissions' =>$this->permissions->pluck('name') ?? []
        ];
     }
 }

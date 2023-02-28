@@ -19,14 +19,12 @@ use App\Http\Resources\UserResource;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-  //  return $request->user();
   return new UserResource($request->user());
 });
 
 Route::post('/login',[LoginController::class,'login']);
 
 Route::controller(AuthController::class)->group(function () {
-    //Route::post('login', 'login');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
     Route::post('register', 'register');  

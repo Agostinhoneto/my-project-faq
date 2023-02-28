@@ -21,7 +21,7 @@ class AuthController extends Controller
 
     public function __construct(private UserService $userService)
     {
-      // $this->middleware('auth:api', ['except' => ['login']]);
+       //$this->middleware('auth:api', ['except' => ['login']]);
     }
 
     public function index(){
@@ -54,20 +54,23 @@ class AuthController extends Controller
     }
 
     public function register(UserFormRequest $request)
-    {      
-
-        $user = User::create([
-            'name' =>$request->name,
-            'email' =>$request->email,
-            'password' =>bcrypt($request->password)
-        ]);
-        $user_role = Role::where(['name' => 'admin'])->first();
-        if ($user_role){
-            $user->assignRole($user_role);
+    {  
+        $dados = $request->except('_token');
+        if($dados != '')
+        {        
+            $user = User::create([
+                'name' =>$request->name,
+                'email' =>$request->email,
+                'password' =>bcrypt($request->password)
+            ]);
+            $user_role = Role::where(['name' => 'admin'])->first();
+            if($user_role){
+                $user->assignRole($user_role);
+            }
+            return new UserResource($user);
         }
 
-        return new UserResource($user);
-
+        
         /*
         $name = $request->input('name');
         $email = $request->input('email');
