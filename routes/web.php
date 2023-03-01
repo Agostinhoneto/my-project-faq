@@ -21,19 +21,12 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::controller(AuthController::class)->group(function () {
-    Route::get('register', 'register');
-});
-
-
 require __DIR__.'/auth.php';
 
-Route::resource('roles',RoleController::class);
-
+//Route::resource('roles',RoleController::class);
 /*
 Route::controller(RoleController::class)->group(function(){
     Route::get('/roles','index')->middleware('can:read roles');

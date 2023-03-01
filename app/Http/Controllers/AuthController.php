@@ -57,17 +57,21 @@ class AuthController extends Controller
     {  
         $dados = $request->except('_token');
         if($dados != '')
-        {        
-            $user = User::create([
-                'name' =>$request->name,
-                'email' =>$request->email,
-                'password' =>bcrypt($request->password)
-            ]);
-            $user_role = Role::where(['name' => 'admin'])->first();
-            if($user_role){
-                $user->assignRole($user_role);
+        {   
+            if(!auth()->user() || !auth()->user->isAdmin)
+            {   
+                $user = User::create([
+                    'name' =>$request->name,
+                    'email' =>$request->email,
+                    'password' =>bcrypt($request->password)
+                ]);
+                
+                $user_role = Role::where(['name' => 'admin'])->first();
+                if($user_role){
+                    $user->assignRole($user_role);
+                }
+                return new UserResource($user);
             }
-            return new UserResource($user);
         }
 
         
@@ -163,5 +167,10 @@ class AuthController extends Controller
         $user = JWTAuth::authenticate($request->token);
  
         return response()->json(['user' => $user]);
+    }
+
+    public function admin()
+    {
+        dd("OIii");
     }
 }
