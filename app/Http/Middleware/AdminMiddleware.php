@@ -2,24 +2,25 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use function Pest\Laravel\get;
 
 class AdminMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     */
+    private $users;
+    public function __construct(User $users)
+    {
+        $this->users= $users;
+    }
+
     public function handle(Request $request, Closure $next)
     {
-        if(!auth()->user() || !auth()->user->isAdmin)
-        {
-            abort(403);
-        }
-        return $next($request);
+        if(!Auth::check())
+          return $next($request);
+        dd('usuario não logado');  
     }
 }
