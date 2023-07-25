@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Resources\UserResource;
+use App\Http\Controllers\EmpresaController;
 use App\Http\Middleware\AdminMiddleware;
 
 
@@ -36,6 +37,16 @@ Route::controller(AuthController::class)->group(function () {
     Route::put('update/{id}','update'); 
     Route::delete('destroy/{id}','destroy');
 });
+
+
+Route::controller(AuthController::class)->group(function () {
+    Route::get('index','index');
+    Route::get('show/{id}','show')->name('empresa.show');
+    Route::put('update/{id}','update'); 
+    Route::delete('destroy/{id}','destroy');
+});
+
+Route::get('/empresa/{id}', [EmpresaController::class, 'show'])->name('empresa.show');
 
 Route::controller(RoleController::class)->group(function () {
     Route::post('store', 'store');
