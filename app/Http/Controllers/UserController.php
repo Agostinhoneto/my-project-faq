@@ -17,8 +17,6 @@ use Illuminate\Support\Facades\Crypt;
 class UserController extends Controller
 {
 
-     
-
     public function __construct(private UserService $userService)
     {
        // $this->middleware('auth:api', ['except' => ['login','register','store']]);

@@ -46,7 +46,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::delete('destroy/{id}','destroy');
 });
 
+Route::get('/empresa/index', [EmpresaController::class, 'index'])->name('empresa.index');
 Route::get('/empresa/{id}', [EmpresaController::class, 'show'])->name('empresa.show');
+Route::post('/empresa/store', [EmpresaController::class, 'store'])->name('empresa.store');
 
 Route::controller(RoleController::class)->group(function () {
     Route::post('store', 'store');
