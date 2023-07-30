@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('nome');
+            $table->string('nome_social');
+            $table->string('razao_social');           
             $table->string('endereco');
             $table->integer('cnpj');
             $table->string('telefone');

@@ -41,14 +41,17 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('index','index');
-    Route::get('show/{id}','show')->name('empresa.show');
+    Route::get('show/{id}','show');
     Route::put('update/{id}','update'); 
     Route::delete('destroy/{id}','destroy');
 });
 
+/*rotas empresa*/
+
 Route::get('/empresa/index', [EmpresaController::class, 'index'])->name('empresa.index');
 Route::get('/empresa/{id}', [EmpresaController::class, 'show'])->name('empresa.show');
 Route::post('/empresa/store', [EmpresaController::class, 'store'])->name('empresa.store');
+Route::post('/empresa/register', [EmpresaController::class, 'register'])->name('empresa.register');  
 
 Route::controller(RoleController::class)->group(function () {
     Route::post('store', 'store');
