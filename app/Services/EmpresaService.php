@@ -20,10 +20,10 @@ class EmpresaService {
         ->getAllEmpresa();
     }
 
-    public function register($user_id,$nome,$nome_social,$razao_social,$endereco,$cnpj,$telefone,$email)
+    public function register($id,$user_id,$nome,$nome_social,$razao_social,$endereco,$cnpj,$telefone,$email)
     {
         $result = $this->empresaRepository
-        ->save($user_id,$nome,$nome_social,$razao_social,$endereco,$cnpj,$telefone,$email);
+        ->save($id,$user_id,$nome,$nome_social,$razao_social,$endereco,$cnpj,$telefone,$email);
         return $result;
     }
 

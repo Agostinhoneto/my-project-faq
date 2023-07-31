@@ -45,7 +45,9 @@ class EmpresaController extends Controller
             'telefone' => 'required|integer|max:11',
             'email'    => 'required|string|email'
         ]);
-        $user_id            = $request->input('user_id'); 
+      //  $user_id         = $request->input('user_id'); 
+        $id              = $request->input('id');
+        $user_id         = $request->input('user_id');
         $nome            = $request->input('nome');
         $nome_social     = $request->input('nome_social');
         $razao_social    = $request->input('razao_social');
@@ -53,10 +55,9 @@ class EmpresaController extends Controller
         $cnpj            = $request->input('cnpj');
         $telefone        = $request->input('telefone');
         $email           = $request->input('email');
-        
-        $result = ['status' =>200];
-        try{
+         try{
             $result['data'] =  $this->empresaService->register(
+            $id,
             $user_id,
             $nome,
             $nome_social, 

@@ -22,10 +22,11 @@ class EmpresaRepository{
         return $this->empresa->where('id',$id)->get();
     }
 
-    public function save($user_id,$nome,$nome_social,$razao_social,$endereco,$cnpj,$telefone,$email)
+    public function save($id,$user_id,$nome,$nome_social,$razao_social,$endereco,$cnpj,$telefone,$email)
     {
         
         $empresa = new $this->empresa;
+        $empresa->id = $id;
         $empresa->user_id = $user_id;
         $empresa->nome = $nome;
         $empresa->nome_social = $nome_social;

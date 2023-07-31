@@ -15,7 +15,14 @@ return new class extends Migration
     {
         Schema::create('tipo_empresa', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('empresa_id')->nullable();
+            $table->string('inscricao_social');
+            $table->string('apelido');
+            $table->string('tipo_empresa');           
+            $table->string('natureza_juridica');
             $table->timestamps();
+            $table->foreign('empresa_id')->references('id')->on('empresas');
+
         });
     }
 
