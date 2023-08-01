@@ -20,6 +20,11 @@ class EmpresaService {
         ->getAllEmpresa();
     }
 
+    public function getById($id){
+        return $this->empresaRepository
+        ->getById($id);
+    }
+
     public function register($user_id,$nome,$nome_social,$razao_social,$endereco,$cnpj,$telefone,$email)
     {
         $result = $this->empresaRepository

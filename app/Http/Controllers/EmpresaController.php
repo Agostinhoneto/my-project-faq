@@ -31,6 +31,22 @@ class EmpresaController extends Controller
         return response()->json($result,$result['status']);     
     }
 
+    public function show($id){
+        $result = ['status' =>200];
+        try{
+            $result['data'] = $this->empresaService->getById($id);
+        }
+        catch(Exception $e){
+            dd($e);
+            $result = [
+                'status' =>500,
+                'error' => $e->getMessage()
+            ];
+        }
+        return response()->json($result,$result['status']);
+    }
+
+
     public function register(Request $request)
     {      
        
@@ -117,4 +133,16 @@ class EmpresaController extends Controller
         return response()->json($result,$result['status']);
     }
 
+    public function destroy($id){
+        $result = ['status' => 200];
+        try{
+            $result['data'] = $this->empresaService->deleteById($id);
+        }catch(Exception $e){
+           return response()->json([
+                	'success' => false,
+                	'message' => 'não foi possível deletar .',
+                ], 500);
+        }
+        return response()->json($result,$result['status']);
+    }
 }
