@@ -14,4 +14,22 @@ class Empresa extends Model
      {
          return $this->belongsTo(user::class);
      }
+
+    public function tipo_empresa()
+    {
+        return $this->belongsTo(Tipo_empresa::class);
+    }
+
+    public function natureza_empresa()
+    {
+        return $this->belongsTo(Natureza_empresa::class);
+    }
+
+    public function inscricao_social()
+    {
+        return $this->belongsTo(Inscricao_social::class);
+    }
+
 }
+
+

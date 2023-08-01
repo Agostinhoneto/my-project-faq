@@ -12,6 +12,11 @@ class Endereco extends Model
 
     public function empresa()
     {
-        return $this->belongsTo(empresa::class);
+        return $this->belongsTo(Empresa::class);
+    }
+
+    public function cidades()
+    {
+        return $this->hasMany(Cidade::class);
     }
 }

@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('logradouro');
             $table->string('numero');
             $table->string('bairro');
-            $table->string('cidade');
-            $table->string('estado');
             $table->string('cep');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
