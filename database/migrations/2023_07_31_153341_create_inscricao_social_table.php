@@ -15,11 +15,9 @@ return new class extends Migration
     {
         Schema::create('inscricao_social', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empresa_id')->nullable();
             $table->string('numero');
             $table->string('estado');     
             $table->timestamps();
-            $table->foreign('empresa_id')->references('id')->on('empresas');
         });
     }
 
