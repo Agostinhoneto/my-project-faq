@@ -52,6 +52,7 @@ Route::get('/empresa/index', [EmpresaController::class, 'index'])->name('empresa
 Route::get('/empresa/show/{id}', [EmpresaController::class, 'show'])->name('empresa.show');
 Route::post('/empresa/store', [EmpresaController::class, 'store'])->name('empresa.store');
 Route::post('/empresa/register', [EmpresaController::class, 'register'])->name('empresa.register');  
+Route::put('/empresa/update/{id}', [EmpresaController::class, 'update'])->name('empresa.update');  
 Route::delete('/empresa/destroy/{id}',[EmpresaController::class, 'destroy'])->name('empresa.destroy');
 
 Route::controller(RoleController::class)->group(function () {

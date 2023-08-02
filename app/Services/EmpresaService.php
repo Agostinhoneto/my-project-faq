@@ -25,17 +25,17 @@ class EmpresaService {
         ->getById($id);
     }
 
-    public function register($user_id,$nome,$nome_social,$razao_social,$endereco,$cnpj,$telefone,$email)
+    public function register($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email)
     {
         $result = $this->empresaRepository
-        ->save($user_id,$nome,$nome_social,$razao_social,$endereco,$cnpj,$telefone,$email);
+        ->save($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email);
         return $result;
     }
 
-    public function update($id,$nome,$nome_social,$razao_social,$endereco,$cnpj,$telefone,$email)
+    public function update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email)
     {
         $result = $this->empresaRepository
-        ->update($id,$nome,$nome_social,$razao_social,$endereco,$cnpj,$telefone,$email);
+        ->update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email);
         return $result;
     }
 

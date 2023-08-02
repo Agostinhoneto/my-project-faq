@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('empresa_id')->nullable();
             $table->string('nome');
-            $table->string('endereco');
             $table->string('telefone');
             $table->timestamps();
             $table->foreign('empresa_id')->references('id')->on('empresas');

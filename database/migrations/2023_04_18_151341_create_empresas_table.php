@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('nome');
             $table->string('nome_social');
             $table->string('razao_social');           
-            $table->string('endereco');
             $table->integer('cnpj');
             $table->integer('telefone');
             $table->string('email');

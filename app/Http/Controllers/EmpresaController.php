@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 use Illuminate\Http\Request;
@@ -37,7 +38,6 @@ class EmpresaController extends Controller
             $result['data'] = $this->empresaService->getById($id);
         }
         catch(Exception $e){
-            dd($e);
             $result = [
                 'status' =>500,
                 'error' => $e->getMessage()
@@ -56,7 +56,6 @@ class EmpresaController extends Controller
             'nome' => 'required|unique',
             'nome_social' => 'required|string|max:50',
             'razao_social' => 'required|string|max:50',
-            'endereco' => 'required|string|max:50',
             'cnpj' => 'required|integer|max:12', 
             'telefone' => 'required|integer|max:11',
             'email'    => 'required|string|email'
@@ -66,23 +65,21 @@ class EmpresaController extends Controller
         $nome            = $request->input('nome');
         $nome_social     = $request->input('nome_social');
         $razao_social    = $request->input('razao_social');
-        $endereco        = $request->input('endereco');
         $cnpj            = $request->input('cnpj');
         $telefone        = $request->input('telefone');
         $email           = $request->input('email');
+
          try{
             $result['data'] =  $this->empresaService->register(
             $user_id,
             $nome,
             $nome_social, 
             $razao_social,
-            $endereco,
             $cnpj,
             $telefone,
             $email
             );
         }catch(Exception $e){
-            dd($e);
             return response()->json([
                 'success' => false,
                 'message' => 'não foi possível criar Empresa.',
@@ -90,47 +87,84 @@ class EmpresaController extends Controller
         }
         return response()->json($result,$result['status']);
     }
-
+/*
     public function update(Request $request,$id)
     {
-        $validator = Validator::make([
-            'nome'         => 'required|unique',
-            'nome_social'  => 'required|string|max:50',
+        $credentials = $request->only('');
+        
+        $validator = Validator::make($credentials, [
+            'nome' => 'required|unique',
+            'nome_social' => 'required|string|max:50',
             'razao_social' => 'required|string|max:50',
-            'endereco'     => 'required|string|max:50',
-            'cnpj'         => 'required|integer|max:12', 
-            'telefone'     => 'required|integer|max:11',
-            'email'        => 'required|string|email'
+            'cnpj' => 'required|integer|max:12', 
+            'telefone' => 'required|integer|max:11',
+            'email'    => 'required|string|email'
         ]);
 
         $id              = $request->input('id');
-        $user_id         = $request->input('user_id');
         $nome            = $request->input('nome');
         $nome_social     = $request->input('nome_social');
         $razao_social    = $request->input('razao_social');
-        $endereco        = $request->input('endereco');
         $cnpj            = $request->input('cnpj');
         $telefone        = $request->input('telefone');
         $email           = $request->input('email');
-        $result = ['status' =>200];
         try{
             $result['data'] = $this->empresaService->update(
                 $id,
-                $user_id,
                 $nome,
                 $nome_social, 
                 $razao_social,
-                $endereco,
                 $cnpj,
                 $telefone,
                 $email);
         }catch(Exception $e){
+            dd($e);
             $result = [
                 'status' => 500,
                 'error' => $e->getMessage()
             ];
         }
         return response()->json($result,$result['status']);
+    }
+*/
+    public function update(Request $request, $id)
+    {
+        // Valide os dados recebidos do request, se necessário
+        
+        $request->validate([
+            'nome' => 'required|unique',
+            'nome_social' => 'required|string|max:50',
+            'razao_social' => 'required|string|max:50',
+            'cnpj' => 'required|integer|max:12', 
+            'telefone' => 'required|integer|max:11',
+            'email'    => 'required|string|email'
+            // Adicione outras regras de validação conforme necessário
+        ]);
+        
+        $id              = $request->input('id');
+        $nome            = $request->input('nome');
+        $nome_social     = $request->input('nome_social');
+        $razao_social    = $request->input('razao_social');
+        $cnpj            = $request->input('cnpj');
+        $telefone        = $request->input('telefone');
+        $email           = $request->input('email');
+
+        try{
+            $result['data'] = $this->empresaService->update(
+                $id,
+                $nome,
+                $nome_social, 
+                $razao_social,
+                $cnpj,
+                $telefone,
+                $email);
+          }catch(Exception $e){
+            dd($e);
+            $result = [
+                'status' => 500,
+                'error' => $e->getMessage()
+            ];
+        }
     }
 
     public function destroy($id){
