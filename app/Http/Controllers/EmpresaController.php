@@ -87,46 +87,7 @@ class EmpresaController extends Controller
         }
         return response()->json($result,$result['status']);
     }
-/*
-    public function update(Request $request,$id)
-    {
-        $credentials = $request->only('');
-        
-        $validator = Validator::make($credentials, [
-            'nome' => 'required|unique',
-            'nome_social' => 'required|string|max:50',
-            'razao_social' => 'required|string|max:50',
-            'cnpj' => 'required|integer|max:12', 
-            'telefone' => 'required|integer|max:11',
-            'email'    => 'required|string|email'
-        ]);
 
-        $id              = $request->input('id');
-        $nome            = $request->input('nome');
-        $nome_social     = $request->input('nome_social');
-        $razao_social    = $request->input('razao_social');
-        $cnpj            = $request->input('cnpj');
-        $telefone        = $request->input('telefone');
-        $email           = $request->input('email');
-        try{
-            $result['data'] = $this->empresaService->update(
-                $id,
-                $nome,
-                $nome_social, 
-                $razao_social,
-                $cnpj,
-                $telefone,
-                $email);
-        }catch(Exception $e){
-            dd($e);
-            $result = [
-                'status' => 500,
-                'error' => $e->getMessage()
-            ];
-        }
-        return response()->json($result,$result['status']);
-    }
-*/
     public function update(Request $request, $id)
     {
         // Valide os dados recebidos do request, se necessário
