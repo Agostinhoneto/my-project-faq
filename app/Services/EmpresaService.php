@@ -14,10 +14,9 @@ class EmpresaService {
     {
         $this->empresaRepository = $empresaRepository;
     }
-
-    public function getAll(){
-        return $this->empresaRepository
-        ->getAllEmpresa();
+    
+    public function getAll($limit = 10){
+        return $this->empresaRepository->getAllEmpresa($limit);
     }
 
     public function getById($id){
@@ -34,8 +33,6 @@ class EmpresaService {
             ->save($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id);
         }
         catch(Exception $e){
-            dd($e);
-           
             DB::roolBack();
             Log::info($e->getMessage());
             throw new InvalidArgumentException('Não pode ser criado');
@@ -72,5 +69,4 @@ class EmpresaService {
         }
         return $empresa;
     }
-
 }

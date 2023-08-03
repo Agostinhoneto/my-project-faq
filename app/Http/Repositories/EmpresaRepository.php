@@ -13,10 +13,9 @@ class EmpresaRepository{
         $this->empresa = $empresa;
     }
     
-    public function getAllEmpresa(){
-        return $this->empresa->get();
+    public function getAllEmpresa($limit){
+        return Empresa::paginate($limit);
     }
-
     
     public function getById($id){
         return $this->empresa->where('id',$id)->get();

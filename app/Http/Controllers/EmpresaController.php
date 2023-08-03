@@ -13,15 +13,16 @@ class EmpresaController extends Controller
  
     public function __construct(private EmpresaService $empresaService)
     {
-       // $this->middleware('auth:api', ['except' => ['login','register','store']]);  
+        $this->empresaService = $empresaService;
+        // $this->middleware('auth:api', ['except' => ['login','register','store']]);  
     }
 
     public function index()
     {
-        $result = ['status' => 200];
-        
+        $limit = 10;
+        $result = ['status' => 200];   
         try{
-            $result['data'] = $this->empresaService->getAll(); 
+            $result['data'] = $this->empresaService->getAll($limit); 
         }   
         catch(Exception $e){
             $result = [
