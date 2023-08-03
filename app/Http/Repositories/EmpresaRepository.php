@@ -22,7 +22,7 @@ class EmpresaRepository{
         return $this->empresa->where('id',$id)->get();
     }
 
-    public function save($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email)
+    public function save($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id)
     {
         
         $empresa = new $this->empresa;
@@ -33,13 +33,16 @@ class EmpresaRepository{
         $empresa->cnpj = $cnpj;
         $empresa->telefone = $telefone;        
         $empresa->email = $email;
+        $empresa->tipo_empresa_id = $tipo_empresa_id;
+        $empresa->natureza_empresa_id = $natureza_empresa_id; 
+        $empresa->inscricao_empresa_id = $inscricao_empresa_id; 
         
         $empresa->save();
         
         return $empresa->fresh();
     }
 
-    public function update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email)
+    public function update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id)
     {   
         $empresa = $this->empresa->find($id);   
         $empresa->nome = $nome;
@@ -48,6 +51,9 @@ class EmpresaRepository{
         $empresa->cnpj = $cnpj;
         $empresa->telefone = $telefone;        
         $empresa->email = $email;
+        $empresa->tipo_empresa_id = $tipo_empresa_id;
+        $empresa->natureza_empresa = $natureza_empresa_id; 
+        $empresa->inscricao_empresa_id = $inscricao_empresa_id; 
 
         $empresa->update();
         

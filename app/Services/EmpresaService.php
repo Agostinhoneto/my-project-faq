@@ -25,17 +25,37 @@ class EmpresaService {
         ->getById($id);
     }
 
-    public function register($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email)
+    public function register($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id)
     {
-        $result = $this->empresaRepository
-        ->save($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email);
+        DB::beginTransaction();
+        try{
+        DB::commit();
+            $result = $this->empresaRepository
+            ->save($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id);
+        }
+        catch(Exception $e){
+            dd($e);
+           
+            DB::roolBack();
+            Log::info($e->getMessage());
+            throw new InvalidArgumentException('Não pode ser criado');
+        }
         return $result;
     }
 
-    public function update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email)
+    public function update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id)
     {
-        $result = $this->empresaRepository
-        ->update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email);
+        DB::beginTransaction();
+        try{
+            DB::commit();
+            $result = $this->empresaRepository
+            ->update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id);
+        }    
+        catch(Exception $e){
+            DB::roolBack();
+            Log::info($e->getMessage());
+            throw new InvalidArgumentException('Não pode ser atualizado');
+        }
         return $result;
     }
 

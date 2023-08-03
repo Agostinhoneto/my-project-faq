@@ -56,19 +56,22 @@ class EmpresaController extends Controller
             'nome' => 'required|unique',
             'nome_social' => 'required|string|max:50',
             'razao_social' => 'required|string|max:50',
-            'cnpj' => 'required|integer|max:12', 
+            'cnpj' => 'required|integer|max:12|unique', 
             'telefone' => 'required|integer|max:11',
             'email'    => 'required|string|email'
         ]);
 
-        $user_id         = $request->input('user_id');
-        $nome            = $request->input('nome');
-        $nome_social     = $request->input('nome_social');
-        $razao_social    = $request->input('razao_social');
-        $cnpj            = $request->input('cnpj');
-        $telefone        = $request->input('telefone');
-        $email           = $request->input('email');
-
+        $user_id              = $request->input('user_id');
+        $nome                 = $request->input('nome');
+        $nome_social          = $request->input('nome_social');
+        $razao_social         = $request->input('razao_social');
+        $cnpj                 = $request->input('cnpj');
+        $telefone             = $request->input('telefone');
+        $email                = $request->input('email');
+        $tipo_empresa_id      = $request->input('tipo_empresa_id');
+        $natureza_empresa_id  = $request->input('natureza_empresa_id');
+        $inscricao_empresa_id = $request->input('inscricao_empresa_id');
+        
          try{
             $result['data'] =  $this->empresaService->register(
             $user_id,
@@ -77,7 +80,10 @@ class EmpresaController extends Controller
             $razao_social,
             $cnpj,
             $telefone,
-            $email
+            $email,
+            $tipo_empresa_id,
+            $natureza_empresa_id, 
+            $inscricao_empresa_id 
             );
         }catch(Exception $e){
             return response()->json([
@@ -109,7 +115,10 @@ class EmpresaController extends Controller
         $cnpj            = $request->input('cnpj');
         $telefone        = $request->input('telefone');
         $email           = $request->input('email');
-
+        $tipo_empresa_id = $request->input('tipo_empresa_id');
+        $natureza_empresa_id = $request->input('natureza_empresa_id');
+        $inscricao_empresa_id  = $request->input('inscricao_empresa_id');
+ 
         try{
             $result['data'] = $this->empresaService->update(
                 $id,
@@ -118,7 +127,11 @@ class EmpresaController extends Controller
                 $razao_social,
                 $cnpj,
                 $telefone,
-                $email);
+                $email,
+                $tipo_empresa_id,
+                $natureza_empresa_id, 
+                $inscricao_empresa_id 
+            );
           }catch(Exception $e){
             dd($e);
             $result = [
