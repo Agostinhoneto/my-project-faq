@@ -86,13 +86,13 @@ class EmpresaController extends Controller
             $natureza_empresa_id, 
             $inscricao_empresa_id 
             );
+            return response()->json(['message' => 'Empresa cadastrada com sucesso!']);
         }catch(Exception $e){
             return response()->json([
                 'success' => false,
                 'message' => 'não foi possível criar Empresa.',
-            ], 500);
+            ],);
         }
-        return response()->json($result,$result['status']);
     }
 
     public function update(Request $request, $id)
@@ -133,8 +133,8 @@ class EmpresaController extends Controller
                 $natureza_empresa_id, 
                 $inscricao_empresa_id 
             );
+            return response()->json(['message' => 'Empresa atualizada com sucesso!']);
           }catch(Exception $e){
-            dd($e);
             $result = [
                 'status' => 500,
                 'error' => $e->getMessage()
@@ -146,12 +146,12 @@ class EmpresaController extends Controller
         $result = ['status' => 200];
         try{
             $result['data'] = $this->empresaService->deleteById($id);
+            return response()->json(['message' => 'Empresa atualizada com sucesso!']);
         }catch(Exception $e){
            return response()->json([
                 	'success' => false,
                 	'message' => 'não foi possível deletar .',
                 ], 500);
         }
-        return response()->json($result,$result['status']);
     }
 }
