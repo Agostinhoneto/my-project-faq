@@ -30,7 +30,6 @@ class EmpresaController extends Controller
                 'error' =>$e->getMessage()
             ];
         }
-        return response()->json($result,$result['status']);     
     }
 
     public function show($id){
@@ -44,7 +43,6 @@ class EmpresaController extends Controller
                 'error' => $e->getMessage()
             ];
         }
-        return response()->json($result,$result['status']);
     }
 
 
@@ -56,7 +54,7 @@ class EmpresaController extends Controller
         $validator = Validator::make($credentials, [
             'nome' => 'required|unique',
             'nome_social' => 'required|string|max:50',
-            'razao_social' => 'required|string|max:50',
+            'razao_social' => 'required|string|max:50|unique',
             'cnpj' => 'required|integer|max:12|unique', 
             'telefone' => 'required|integer|max:11',
             'email'    => 'required|string|email'
@@ -102,11 +100,10 @@ class EmpresaController extends Controller
         $request->validate([
             'nome' => 'required|unique',
             'nome_social' => 'required|string|max:50',
-            'razao_social' => 'required|string|max:50',
-            'cnpj' => 'required|integer|max:12', 
+            'razao_social' => 'required|string|max:50|unique',
+            'cnpj' => 'required|integer|max:12|unique', 
             'telefone' => 'required|integer|max:11',
             'email'    => 'required|string|email'
-            // Adicione outras regras de validação conforme necessário
         ]);
         
         $id              = $request->input('id');
@@ -146,7 +143,7 @@ class EmpresaController extends Controller
         $result = ['status' => 200];
         try{
             $result['data'] = $this->empresaService->deleteById($id);
-            return response()->json(['message' => 'Empresa atualizada com sucesso!']);
+            return response()->json(['message' => 'Empresa Excluida com sucesso!']);
         }catch(Exception $e){
            return response()->json([
                 	'success' => false,
