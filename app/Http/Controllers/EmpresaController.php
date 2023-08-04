@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Exception;
 use Illuminate\Http\Request;
 use App\Services\EmpresaService;
+use App\HttpStatusCodes; 
 
 class EmpresaController extends Controller
 {
@@ -21,26 +22,31 @@ class EmpresaController extends Controller
     {
         $limit = 10;
         try{
-            $result['data'] = $this->empresaService->getAll($limit); 
+           return $result['data'] = $this->empresaService->getAll($limit); 
+            response()->json([
+                'message' => 'Dados retornados com Sucesso',
+            ], HttpStatusCodes::OK,$result);
+            
         }   
         catch(Exception $e){
-            $result = [
-                'status' => 500,
-                'error' =>$e->getMessage()
-            ];
+            return response()->json([
+                'message' => 'Erro ao tentar trazer os Dados',
+            ], HttpStatusCodes::INTERNAL_SERVER_ERROR);        
         }
+        
     }
 
     public function show($id){
-        $result = ['status' =>200];
         try{
             $result['data'] = $this->empresaService->getById($id);
+            response()->json([
+                'message' => 'Dados retornados com Sucesso',
+            ], HttpStatusCodes::OK,$result);
         }
         catch(Exception $e){
-            $result = [
-                'status' =>500,
-                'error' => $e->getMessage()
-            ];
+            return response()->json([
+                'message' => 'Erro ao tentar trazer os Dados',
+            ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -83,12 +89,11 @@ class EmpresaController extends Controller
             $natureza_empresa_id, 
             $inscricao_empresa_id 
             );
-            return response()->json(['message' => 'Empresa cadastrada com sucesso!']);
+            return response()->json([HttpStatusCodes::OK]);
         }catch(Exception $e){
             return response()->json([
-                'success' => false,
-                'message' => 'não foi possível criar Empresa.',
-            ],);
+                'message' => 'Erro ao tentar trazer os Dados',
+            ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
         }
     }
 
