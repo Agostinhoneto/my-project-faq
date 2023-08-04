@@ -8,6 +8,8 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Services\EmpresaService;
 use App\HttpStatusCodes; 
+use Illuminate\Support\Facades\DB;
+
 
 class EmpresaController extends Controller
 {
@@ -37,11 +39,12 @@ class EmpresaController extends Controller
     }
 
     public function show($id){
+        
         try{
-            $result['data'] = $this->empresaService->getById($id);
-            response()->json([
-                'message' => 'Dados retornados com Sucesso',
-            ], HttpStatusCodes::OK,$result);
+            if (!empty($id)) {
+                $result['data'] = $this->empresaService->getById($id);
+                return response()->json(['message' => 'Retorno do valor com sucesso!',HttpStatusCodes::OK,$result]);
+            }
         }
         catch(Exception $e){
             return response()->json([
@@ -64,19 +67,21 @@ class EmpresaController extends Controller
             'telefone' => 'required|integer|max:11',
             'email'    => 'required|string|email'
         ]);
-
-        $user_id              = $request->input('user_id');
-        $nome                 = $request->input('nome');
-        $nome_social          = $request->input('nome_social');
-        $razao_social         = $request->input('razao_social');
-        $cnpj                 = $request->input('cnpj');
-        $telefone             = $request->input('telefone');
-        $email                = $request->input('email');
-        $tipo_empresa_id      = $request->input('tipo_empresa_id');
-        $natureza_empresa_id  = $request->input('natureza_empresa_id');
-        $inscricao_empresa_id = $request->input('inscricao_empresa_id');
         
-         try{
+        $data = $dados = [
+            $user_id              = $request->input('user_id'),
+            $nome                 = $request->input('nome'),
+            $nome_social          = $request->input('nome_social'),
+            $razao_social         = $request->input('razao_social'),
+            $cnpj                 = $request->input('cnpj'),
+            $telefone             = $request->input('telefone'),
+            $email                = $request->input('email'),
+            $tipo_empresa_id      = $request->input('tipo_empresa_id'),
+            $natureza_empresa_id  = $request->input('natureza_empresa_id'),
+            $inscricao_empresa_id = $request->input('inscricao_empresa_id'),
+        ];
+        DB::beginTransaction();
+        try {
             $result['data'] =  $this->empresaService->register(
             $user_id,
             $nome,
@@ -89,18 +94,18 @@ class EmpresaController extends Controller
             $natureza_empresa_id, 
             $inscricao_empresa_id 
             );
-            return response()->json([HttpStatusCodes::OK]);
+            DB::commit();
+            return response()->json(['message' => 'Empresa criada com sucesso!',HttpStatusCodes::CREATED]);
         }catch(Exception $e){
             return response()->json([
-                'message' => 'Erro ao tentar trazer os Dados',
+                'message' => 'Erro ao criar os Dados',
             ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
+            DB::roolBack();
         }
     }
 
     public function update(Request $request, $id)
-    {
-        // Valide os dados recebidos do request, se necessário
-        
+    {        
         $request->validate([
             'nome' => 'required|unique',
             'nome_social' => 'required|string|max:50',
@@ -120,9 +125,10 @@ class EmpresaController extends Controller
         $tipo_empresa_id = $request->input('tipo_empresa_id');
         $natureza_empresa_id = $request->input('natureza_empresa_id');
         $inscricao_empresa_id  = $request->input('inscricao_empresa_id');
- 
-        try{
-            $result['data'] = $this->empresaService->update(
+     
+        DB::beginTransaction();
+        try {
+           $result['data'] = $this->empresaService->update(
                 $id,
                 $nome,
                 $nome_social, 
@@ -134,25 +140,28 @@ class EmpresaController extends Controller
                 $natureza_empresa_id, 
                 $inscricao_empresa_id 
             );
-            return response()->json(['message' => 'Empresa atualizada com sucesso!']);
+            DB::commit();
+            return response()->json(['message' => 'Empresa atualizada com sucesso!',HttpStatusCodes::OK]);
           }catch(Exception $e){
-            $result = [
-                'status' => 500,
-                'error' => $e->getMessage()
-            ];
+            return response()->json([
+                'message' => 'Erro ao atualizar os Dados',
+            ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
+            DB::roolBack();
         }
     }
 
     public function destroy($id){
         $result = ['status' => 200];
+        DB::beginTransaction();      
         try{
             $result['data'] = $this->empresaService->deleteById($id);
-            return response()->json(['message' => 'Empresa Excluida com sucesso!']);
+            return response()->json(['message' => 'Empresa Deletado com sucesso!',HttpStatusCodes::OK]);
+            DB::commit();
         }catch(Exception $e){
-           return response()->json([
-                	'success' => false,
-                	'message' => 'não foi possível deletar .',
-                ], 500);
+            return response()->json([
+                'message' => 'Erro ao deletar os Dados',
+            ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
+            DB::roolBack();
         }
     }
 }
