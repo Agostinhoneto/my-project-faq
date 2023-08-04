@@ -20,7 +20,6 @@ class EmpresaController extends Controller
     public function index()
     {
         $limit = 10;
-        $result = ['status' => 200];   
         try{
             $result['data'] = $this->empresaService->getAll($limit); 
         }   
