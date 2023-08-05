@@ -39,7 +39,6 @@ class EmpresaController extends Controller
     }
 
     public function show($id){
-        
         try{
             if (!empty($id)) {
                 $result['data'] = $this->empresaService->getById($id);
@@ -97,10 +96,10 @@ class EmpresaController extends Controller
             DB::commit();
             return response()->json(['message' => 'Empresa criada com sucesso!',HttpStatusCodes::CREATED]);
         }catch(Exception $e){
+            DB::roolBack();
             return response()->json([
                 'message' => 'Erro ao criar os Dados',
             ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
-            DB::roolBack();
         }
     }
 
@@ -143,25 +142,24 @@ class EmpresaController extends Controller
             DB::commit();
             return response()->json(['message' => 'Empresa atualizada com sucesso!',HttpStatusCodes::OK]);
           }catch(Exception $e){
+            DB::roolBack();
             return response()->json([
                 'message' => 'Erro ao atualizar os Dados',
             ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
-            DB::roolBack();
         }
     }
 
     public function destroy($id){
-        $result = ['status' => 200];
         DB::beginTransaction();      
         try{
-            $result['data'] = $this->empresaService->deleteById($id);
-            return response()->json(['message' => 'Empresa Deletado com sucesso!',HttpStatusCodes::OK]);
+            $this->empresaService->deleteById($id);
             DB::commit();
+            return response()->json(['message' => 'Empresa Deletado com sucesso!',HttpStatusCodes::OK]);
         }catch(Exception $e){
+            DB::roolBack();
             return response()->json([
                 'message' => 'Erro ao deletar os Dados',
             ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
-            DB::roolBack();
         }
     }
 }
