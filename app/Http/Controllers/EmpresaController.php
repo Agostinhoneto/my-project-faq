@@ -56,7 +56,6 @@ class EmpresaController extends Controller
 
     public function register(EmpresaRequest $request)
     {  
-       // dd($request);    
         $dados = [
             $user_id              = $request->input('user_id'),
             $nome                 = $request->input('nome'),
@@ -69,6 +68,7 @@ class EmpresaController extends Controller
             $natureza_empresa_id  = $request->input('natureza_empresa_id'),
             $inscricao_empresa_id = $request->input('inscricao_empresa_id'),
         ];
+        
         DB::beginTransaction();
         try {
             $result['data'] =  $this->empresaService->register(

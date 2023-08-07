@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::table('enderecos', function($table){
             $table->unsignedBigInteger('cidade_id');
-            $table->foreign('cidade_id')->references('id')->on('cidades')->onDelete('cascade');
+            $table->unsignedBigInteger('filial_id')->nullable();
+            $table->foreign('cidade_id')->references('id')->on('filial_empresas')->onDelete('cascade');
+            $table->foreign('filial_id')->references('id')->on('filial_empresas')->onDelete('cascade');
 
         });
     }

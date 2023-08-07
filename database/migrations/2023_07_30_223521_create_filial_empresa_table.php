@@ -13,16 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('filial_empresa', function (Blueprint $table) {
+        Schema::create('filial_empresas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('empresa_id')->nullable();
-            $table->string('nome');
+            $table->string('nome_fantasia');
+            $table->string('cnpj');
             $table->string('telefone');
+            $table->boolean('ativo');
+            $table->string('inscricao_estadual');
             $table->timestamps();
             $table->foreign('empresa_id')->references('id')->on('empresas');
         });
     }
-
     /**
      * Reverse the migrations.
      *

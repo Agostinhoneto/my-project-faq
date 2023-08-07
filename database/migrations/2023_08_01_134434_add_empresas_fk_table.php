@@ -18,9 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('natureza_empresa_id')->nullable();
             $table->unsignedBigInteger('inscricao_empresa_id')->nullable();
 
-            $table->foreign('tipo_empresa_id')->references('id')->on('tipo_empresa');
-            $table->foreign('natureza_empresa_id')->references('id')->on('natureza_empresa');
-            $table->foreign('inscricao_empresa_id')->references('id')->on('inscricao_social');
+            $table->foreign('tipo_empresa_id')->references('id')->on('tipo_empresas');
+            $table->foreign('natureza_empresa_id')->references('id')->on('natureza_empresas');
+            $table->foreign('inscricao_empresa_id')->references('id')->on('inscricao_sociais');
 
         });
     }
