@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmpresaRequest;
 use App\Models\Empresa;
 use Illuminate\Support\Facades\Validator;
 use Exception;
@@ -53,21 +54,10 @@ class EmpresaController extends Controller
     }
 
 
-    public function register(Request $request)
-    {      
-       
-        $credentials = $request->only('');
-        
-        $validator = Validator::make($credentials, [
-            'nome' => 'required|unique',
-            'nome_social' => 'required|string|max:50',
-            'razao_social' => 'required|string|max:50|unique',
-            'cnpj' => 'required|integer|max:12|unique', 
-            'telefone' => 'required|integer|max:11',
-            'email'    => 'required|string|email'
-        ]);
-        
-        $data = $dados = [
+    public function register(EmpresaRequest $request)
+    {  
+       // dd($request);    
+        $dados = [
             $user_id              = $request->input('user_id'),
             $nome                 = $request->input('nome'),
             $nome_social          = $request->input('nome_social'),
@@ -96,6 +86,7 @@ class EmpresaController extends Controller
             DB::commit();
             return response()->json(['message' => 'Empresa criada com sucesso!',HttpStatusCodes::CREATED]);
         }catch(Exception $e){
+            dd($e);
             DB::roolBack();
             return response()->json([
                 'message' => 'Erro ao criar os Dados',
