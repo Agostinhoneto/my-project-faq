@@ -18,7 +18,7 @@ class EnderecosSeeder extends Seeder
         Endereco::create([
             'empresa_id' => '1',
             'cidade_id' => '1',
-
+            'filial_id' => '1',
             'logradouro' => 'Rua Exemplo 1',
             'numero' => '123',
             'bairro' => 'Bairro Exemplo',
@@ -28,6 +28,7 @@ class EnderecosSeeder extends Seeder
         Endereco::create([
             'empresa_id' => '2', 
             'cidade_id' => '1',
+            'filial_id' => '1',
             'logradouro' => 'Rua Exemplo 2',
             'numero' => '456',
             'bairro' => 'Bairro Exemplo',

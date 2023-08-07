@@ -7,7 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\EmpresaController;
-use App\Http\Controllers\FilialController;
+use App\Http\Controllers\FilialEmpresaController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Models\Filial;
 
@@ -55,7 +55,7 @@ Route::controller(EmpresaController::class)->group(function () {
     Route::delete('/empresa/destroy/{id}','destroy');
 });
 
-Route::controller(FilialController::class)->group(function () {
+Route::controller(FilialEmpresaController::class)->group(function () {
     Route::get('/filial/index','index');
     Route::get('/filial/register','register');
     Route::get('/filial/show/{id}','show');
