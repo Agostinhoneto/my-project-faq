@@ -15,7 +15,6 @@ class InscricaoSociaisSeeder extends Seeder
      */
     public function run()
     {
-         // Crie registros de inscrição social aqui
         // Exemplo:
         InscricaoSociais::create([
             'id' => 1,
@@ -25,7 +24,5 @@ class InscricaoSociaisSeeder extends Seeder
         InscricaoSociais::create([
             'id' => 2
         ]);
-
-        // Adicione mais registros conforme necessário
     }
 }

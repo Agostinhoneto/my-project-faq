@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Filial;
+use App\Models\FilialEmpresa;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class FilialSeeder extends Seeder
+class FilialEmpresaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,17 +16,22 @@ class FilialSeeder extends Seeder
     public function run()
     {
             
-        Filial::create([
+        FilialEmpresa::create([
+            'empresa_id' => 1,
             'nome_fantasia' => 'Nome Fantasia',
             'cnpj' => '12345674', 
+            'telefone' => '12345674', 
             'ativo' => true,
             'inscricao_estadual' => '123456'
         ]);
 
-        Filial::create([
-            'nome' => 'Filial B',
-            'endereco' => 'Avenida Secundária, 456',
-            // ... outras colunas
+        FilialEmpresa::create([
+            'empresa_id' => 1,
+            'nome_fantasia' => 'Nome Fantasia',
+            'cnpj' => '12345674', 
+            'telefone' => '12345674',
+            'ativo' => true,
+            'inscricao_estadual' => '123456'
         ]);
     }
 }

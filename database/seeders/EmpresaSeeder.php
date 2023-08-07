@@ -21,11 +21,9 @@ class EmpresaSeeder extends Seeder
             'nome' => 'Minha Empresa',
             'nome_social' => 'Nome SOcial',
             'razao_social' => 'Razão SOcial',
-            'endereco' => 'Meu endereço ',
             'cnpj' => '12345674',
             'email' => 'teste@gmail.com',
             'telefone' => '999999999',            
-            // Adicione outros campos da empresa aqui
         ]);
     }
 }

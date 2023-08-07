@@ -19,7 +19,6 @@ class EstadosTableSeeder extends Seeder
             ['nome' => 'São Paulo', 'sigla' => 'SP'],
             ['nome' => 'Rio de Janeiro', 'sigla' => 'RJ'],
             ['nome' => 'Minas Gerais', 'sigla' => 'MG'],
-            // Adicione mais estados conforme necessário
         ];
 
         Estado::insert($estados);
