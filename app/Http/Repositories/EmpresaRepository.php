@@ -59,11 +59,11 @@ class EmpresaRepository{
         return $empresa->fresh();
     }    
 
-    public function delete($id)
+    public function update_destroy($id)
     {
         if($id != null ){
             $empresa = $this->empresa->findOrFail($id);
-            $empresa->delete();
+            $empresa->update();
         } 
         return $empresa;  
     }

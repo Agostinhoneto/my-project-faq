@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nome_fantasia');
             $table->string('cnpj');
             $table->string('telefone',11);
-            $table->boolean('ativo');
+            $table->boolean('ativo')->default(1);
             $table->string('inscricao_estadual');
             $table->timestamps();
             $table->foreign('empresa_id')->references('id')->on('empresas');

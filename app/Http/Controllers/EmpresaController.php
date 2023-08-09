@@ -140,13 +140,15 @@ class EmpresaController extends Controller
         }
     }
 
-    public function destroy($id){
+    public function update_destroy($id){
         DB::beginTransaction();      
         try{
-            $this->empresaService->deleteById($id);
+            $empresa = Empresa::where('id', $id)->update(['ativo' => 0]);
+            $this->empresaService->deleteById($empresa);
             DB::commit();
             return response()->json(['message' => 'Empresa Deletado com sucesso!',HttpStatusCodes::OK]);
         }catch(Exception $e){
+            dd($e);
             DB::roolBack();
             return response()->json([
                 'message' => 'Erro ao deletar os Dados',

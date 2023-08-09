@@ -53,11 +53,11 @@ class FilialEmpresaRepository{
         return $filialempresa->fresh();
     }    
 
-    public function delete($id)
+    public function update_destroy($id)
     {
         if($id != null ){
             $filialempresa = $this->filialempresa->findOrFail($id);
-            $filialempresa->delete();
+            $filialempresa->update();
         } 
         return $filialempresa;  
     }

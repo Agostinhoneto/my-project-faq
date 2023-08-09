@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('cnpj');
             $table->integer('telefone');
             $table->string('email');
+            $table->boolean('ativo')->default(1);;
             $table->timestamps();          
             $table->foreign('user_id')->references('id')->on('users');
         });

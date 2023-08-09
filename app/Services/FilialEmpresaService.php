@@ -40,7 +40,7 @@ class FilialEmpresaService
 
     public function deleteById($id)
     {
-        $filialempresa = $this->filialEmpresaRepository->delete($id);
+        $filialempresa = $this->filialEmpresaRepository->update_destroy($id);
         return $filialempresa;
     }
 }

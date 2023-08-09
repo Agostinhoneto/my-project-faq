@@ -45,7 +45,7 @@ class EmpresaService
 
     public function deleteById($id)
     {
-        $empresa = $this->empresaRepository->delete($id);
+        $empresa = $this->empresaRepository->update_destroy($id);
         return $empresa;
     }
 }

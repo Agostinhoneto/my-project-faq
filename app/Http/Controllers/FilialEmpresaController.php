@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\HttpStatusCodes;
+use App\Models\FilialEmpresa;
 use Illuminate\Support\Facades\Validator;
 use App\Services\FilialEmpresaService;
 use Exception;
@@ -97,7 +98,7 @@ class FilialEmpresaController extends Controller
                 $ativo,
                 $inscricao_estadual
             );
-            
+
             DB::commit();
             return response()->json(['message' => 'Empresa atualizada com sucesso!', HttpStatusCodes::OK]);
         } catch (Exception $e) {
@@ -110,14 +111,15 @@ class FilialEmpresaController extends Controller
 
     public function update_destroy($id)
     {
-        //alterar status 0 , 1
         DB::beginTransaction();
-        try {
-            $this->filialEmpresaService->deleteById($id);
+        try {            
+            $filial = FilialEmpresa::where('id', $id)->update(['ativo' => 0]);
+            $this->filialEmpresaService->deleteById($filial);
             DB::commit();
             return response()->json(['message' => 'Empresa Deletado com sucesso!', HttpStatusCodes::OK]);
         } catch (Exception $e) {
             DB::roolBack();
+            dd($e);
             return response()->json([
                 'message' => 'Erro ao deletar os Dados',
             ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
