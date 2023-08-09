@@ -13,7 +13,7 @@ class EmpresaRepository{
         $this->empresa = $empresa;
     }
     
-    public function getAllEmpresa($limit){
+    public function getAll($limit){
         return Empresa::paginate($limit);
     }
     

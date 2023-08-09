@@ -20,7 +20,7 @@ class EmpresaService
 
     public function getAll($limit = 10)
     {
-        return $this->empresaRepository->getAllEmpresa($limit);
+        return $this->empresaRepository->getAll($limit);
     }
 
     public function getById($id)
