@@ -24,23 +24,23 @@ class FilialEmpresaService
             ->getById($id);
     }
 
-    public function register($user_id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id)
+    public function register($empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual)
     {
         $result = $this->filialEmpresaRepository
-            ->save($user_id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id);
-        return $result;
+            ->save($empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual);
+         return $result;
     }
 
-    public function update($id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id)
+    public function update($id,$empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual)
     {
         $result = $this->filialEmpresaRepository
-            ->update($id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id);
+            ->update($id,$empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual);
         return $result;
     }
 
     public function deleteById($id)
     {
-        $empresa = $this->filialEmpresaRepository->delete($id);
-        return $empresa;
+        $filialempresa = $this->filialEmpresaRepository->delete($id);
+        return $filialempresa;
     }
 }

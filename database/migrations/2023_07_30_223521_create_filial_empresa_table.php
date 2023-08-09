@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('empresa_id')->nullable();
             $table->string('nome_fantasia');
             $table->string('cnpj');
-            $table->string('telefone');
+            $table->string('telefone',11);
             $table->boolean('ativo');
             $table->string('inscricao_estadual');
             $table->timestamps();

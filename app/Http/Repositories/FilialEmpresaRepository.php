@@ -9,62 +9,57 @@ use Illuminate\Http\Request;
 class FilialEmpresaRepository{
     
     protected $filialempresa;
-
+    
+    public function __construct(FilialEmpresa $filialempresa)
+    {
+        $this->filialempresa = $filialempresa;
+    }
     public function getAll($limit){
         return FilialEmpresa::paginate($limit);
     }
     
     public function getById($id){
         return FilialEmpresa::findOrFail($id);
-        //return $this->filialempresa->where('id',$id)->get();
     }
 
     
-    public function save($nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id)
+    public function save($empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual)
     {
+
+        $filialempresa = new $this->filialempresa;
+
+        $filialempresa->empresa_id = $empresa_id;
+        $filialempresa->nome_fantasia = $nome_fantasia;
+        $filialempresa->cnpj  = $cnpj;
+        $filialempresa->telefone = $telefone;        
+        $filialempresa->ativo = $ativo;
+        $filialempresa->inscricao_estadual = $inscricao_estadual;
+        $filialempresa->save();
         
-        $empresa = new $this->filialempresa;
-       // $empresa->user_id = $user_id;
-        $empresa->nome = $nome;
-        $empresa->nome_social = $nome_social;
-        $empresa->razao_social = $razao_social;
-        $empresa->cnpj = $cnpj;
-        $empresa->telefone = $telefone;        
-        $empresa->email = $email;
-        $empresa->tipo_empresa_id = $tipo_empresa_id;
-        $empresa->natureza_empresa_id = $natureza_empresa_id; 
-        $empresa->inscricao_empresa_id = $inscricao_empresa_id; 
-        
-        $empresa->save();
-        
-        return $empresa->fresh();
+        return $filialempresa->fresh();
     }
 
-    public function update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id)
+    public function update($id,$empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual)
     {   
-        $empresa = $this->filialempresa->find($id);   
-        $empresa->nome = $nome;
-        $empresa->nome_social = $nome_social;
-        $empresa->razao_social = $razao_social;
-        $empresa->cnpj = $cnpj;
-        $empresa->telefone = $telefone;        
-        $empresa->email = $email;
-        $empresa->tipo_empresa_id = $tipo_empresa_id;
-        $empresa->natureza_empresa = $natureza_empresa_id; 
-        $empresa->inscricao_empresa_id = $inscricao_empresa_id; 
-
-        $empresa->update();
+        $filialempresa = $this->filialempresa->find($id);   
+        $filialempresa->$empresa_id = $empresa_id;      
+        $filialempresa->nome_fantasia = $nome_fantasia;
+        $filialempresa->cnpj  = $cnpj;
+        $filialempresa->telefone = $telefone; 
+        $filialempresa->ativo = $ativo;
+        $filialempresa->inscricao_estadual = $inscricao_estadual;     
+        $filialempresa->update();
         
-        return $empresa->fresh();
+        return $filialempresa->fresh();
     }    
 
     public function delete($id)
     {
         if($id != null ){
-            $empresa = $this->filialempresa->findOrFail($id);
-            $empresa->delete();
+            $filialempresa = $this->filialempresa->findOrFail($id);
+            $filialempresa->delete();
         } 
-        return $empresa;  
+        return $filialempresa;  
     }
 
 }

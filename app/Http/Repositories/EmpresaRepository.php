@@ -18,7 +18,7 @@ class EmpresaRepository{
     }
     
     public function getById($id){
-        return $this->empresa->where('id',$id)->get();
+        return Empresa::findOrFail($id);
     }
 
     public function save($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id)
