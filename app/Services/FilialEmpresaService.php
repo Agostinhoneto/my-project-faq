@@ -24,23 +24,23 @@ class FilialEmpresaService
             ->getById($id);
     }
 
-    public function register($empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual)
+    public function register($empresa_id,$nome_fantasia,$cnpj,$telefone,$status,$inscricao_estadual)
     {
         $result = $this->filialEmpresaRepository
-            ->save($empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual);
+            ->save($empresa_id,$nome_fantasia,$cnpj,$telefone,$status,$inscricao_estadual);
          return $result;
     }
 
-    public function update($id,$empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual)
+    public function update($id,$empresa_id,$nome_fantasia,$cnpj,$telefone,$status,$inscricao_estadual)
     {
         $result = $this->filialEmpresaRepository
-            ->update($id,$empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual);
+            ->update($id,$empresa_id,$nome_fantasia,$cnpj,$telefone,$status,$inscricao_estadual);
         return $result;
     }
 
     public function deleteById($id)
     {
-        $filialempresa = $this->filialEmpresaRepository->update_destroy($id);
+        $filialempresa = $this->filialEmpresaRepository->alterar_status($id);
         return $filialempresa;
     }
 }

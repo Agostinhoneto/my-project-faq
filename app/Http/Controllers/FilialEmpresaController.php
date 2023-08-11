@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilialEmpresaRequest;
 use App\HttpStatusCodes;
 use App\Models\FilialEmpresa;
 use Illuminate\Support\Facades\Validator;
@@ -21,8 +22,8 @@ class FilialEmpresaController extends Controller
     {
         $limit = 10;
         try {
-            return $result['data'] = $this->filialEmpresaService->getAll($limit);
-            response()->json([
+            $result['data'] = $this->filialEmpresaService->getAll($limit);
+            return response()->json([
                 'message' => 'Dados retornados com Sucesso',
             ], HttpStatusCodes::OK, $result);
         } catch (Exception $e) {
@@ -46,14 +47,15 @@ class FilialEmpresaController extends Controller
 
 
 
-    public function register(Request $request)
+    public function register(FilialEmpresaRequest $request) 
     {
+        
         $dados = [
             $empresa_id          = $request->input('empresa_id'),
             $nome_fantasia       = $request->input('nome_fantasia'),
             $cnpj                = $request->input('cnpj'),
             $telefone            = $request->input('telefone'),
-            $ativo               = $request->input('ativo'),
+            $status              = $request->input('status'), 
             $inscricao_estadual  = $request->input('inscricao_estadual'),
         ];
         DB::beginTransaction();
@@ -63,7 +65,7 @@ class FilialEmpresaController extends Controller
                 $nome_fantasia,
                 $cnpj,
                 $telefone,
-                $ativo,
+                $status,
                 $inscricao_estadual
             );
             DB::commit();
@@ -78,14 +80,14 @@ class FilialEmpresaController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(FilialEmpresaRequest $request, $id)
     {
         $dados = [
             $empresa_id          = $request->input('empresa_id'),
             $nome_fantasia       = $request->input('nome_fantasia'),
             $cnpj                = $request->input('cnpj'),
             $telefone            = $request->input('telefone'),
-            $ativo               = $request->input('ativo'),
+            $status              = $request->input('status'), 
             $inscricao_estadual  = $request->input('inscricao_estadual'),
         ];
         DB::beginTransaction();
@@ -95,7 +97,7 @@ class FilialEmpresaController extends Controller
                 $nome_fantasia,
                 $cnpj,
                 $telefone,
-                $ativo,
+                $status,
                 $inscricao_estadual
             );
 
@@ -109,11 +111,11 @@ class FilialEmpresaController extends Controller
         }
     }
 
-    public function update_destroy($id)
+    public function alterar_status($id)
     {
         DB::beginTransaction();
         try {            
-            $filial = FilialEmpresa::where('id', $id)->update(['ativo' => 0]);
+            $filial = FilialEmpresa::where('id', $id)->update(['status' => 0]);
             $this->filialEmpresaService->deleteById($filial);
             DB::commit();
             return response()->json(['message' => 'Empresa Deletado com sucesso!', HttpStatusCodes::OK]);

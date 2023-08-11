@@ -9,6 +9,8 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Services\EmpresaService;
 use App\HttpStatusCodes; 
+use App\Messages;
+use GuzzleHttp\Psr7\Message;
 use Illuminate\Support\Facades\DB;
 
 
@@ -25,11 +27,8 @@ class EmpresaController extends Controller
     {
         $limit = 10;
         try{
-           return $result['data'] = $this->empresaService->getAll($limit); 
-            response()->json([
-                'message' => 'Dados retornados com Sucesso',
-            ], HttpStatusCodes::OK,$result);
-            
+            $result['data'] = $this->empresaService->getAll($limit); 
+            return response()->json([Messages::SUCCESS_MESSAGE,HttpStatusCodes::OK]);
         }   
         catch(Exception $e){
             return response()->json([
@@ -67,6 +66,7 @@ class EmpresaController extends Controller
             $tipo_empresa_id      = $request->input('tipo_empresa_id'),
             $natureza_empresa_id  = $request->input('natureza_empresa_id'),
             $inscricao_empresa_id = $request->input('inscricao_empresa_id'),
+            $status              = $request->input('status'), 
         ];
         
         DB::beginTransaction();
@@ -81,10 +81,11 @@ class EmpresaController extends Controller
             $email,
             $tipo_empresa_id,
             $natureza_empresa_id, 
-            $inscricao_empresa_id 
+            $inscricao_empresa_id, 
+            $status
             );
             DB::commit();
-            return response()->json(['message' => 'Empresa criada com sucesso!',HttpStatusCodes::CREATED]);
+            return response()->json([Messages::SUCCESS_MESSAGE,HttpStatusCodes::CREATED]);
         }catch(Exception $e){
             dd($e);
             DB::roolBack();
@@ -94,7 +95,7 @@ class EmpresaController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(EmpresaRequest $request, $id)
     {        
         $request->validate([
             'nome' => 'required|unique',
@@ -131,7 +132,7 @@ class EmpresaController extends Controller
                 $inscricao_empresa_id 
             );
             DB::commit();
-            return response()->json(['message' => 'Empresa atualizada com sucesso!',HttpStatusCodes::OK]);
+            return response()->json([Messages::SUCCESS_MESSAGE,HttpStatusCodes::OK]);
           }catch(Exception $e){
             DB::roolBack();
             return response()->json([
@@ -140,13 +141,13 @@ class EmpresaController extends Controller
         }
     }
 
-    public function update_destroy($id){
+    public function alterar_status($id){
         DB::beginTransaction();      
         try{
             $empresa = Empresa::where('id', $id)->update(['ativo' => 0]);
             $this->empresaService->deleteById($empresa);
             DB::commit();
-            return response()->json(['message' => 'Empresa Deletado com sucesso!',HttpStatusCodes::OK]);
+            return response()->json([Messages::SUCCESS_MESSAGE,HttpStatusCodes::OK]);
         }catch(Exception $e){
             dd($e);
             DB::roolBack();

@@ -23,7 +23,7 @@ class FilialEmpresaRepository{
     }
 
     
-    public function save($empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual)
+    public function save($empresa_id,$nome_fantasia,$cnpj,$telefone,$status,$inscricao_estadual)
     {
 
         $filialempresa = new $this->filialempresa;
@@ -32,28 +32,28 @@ class FilialEmpresaRepository{
         $filialempresa->nome_fantasia = $nome_fantasia;
         $filialempresa->cnpj  = $cnpj;
         $filialempresa->telefone = $telefone;        
-        $filialempresa->ativo = $ativo;
+        $filialempresa->status = $status;
         $filialempresa->inscricao_estadual = $inscricao_estadual;
         $filialempresa->save();
         
         return $filialempresa->fresh();
     }
 
-    public function update($id,$empresa_id,$nome_fantasia,$cnpj,$telefone,$ativo,$inscricao_estadual)
+    public function update($id,$empresa_id,$nome_fantasia,$cnpj,$telefone,$status,$inscricao_estadual)
     {   
         $filialempresa = $this->filialempresa->find($id);   
         $filialempresa->$empresa_id = $empresa_id;      
         $filialempresa->nome_fantasia = $nome_fantasia;
         $filialempresa->cnpj  = $cnpj;
         $filialempresa->telefone = $telefone; 
-        $filialempresa->ativo = $ativo;
+        $filialempresa->status = $status;
         $filialempresa->inscricao_estadual = $inscricao_estadual;     
         $filialempresa->update();
         
         return $filialempresa->fresh();
     }    
 
-    public function update_destroy($id)
+    public function alterar_status($id)
     {
         if($id != null ){
             $filialempresa = $this->filialempresa->findOrFail($id);
