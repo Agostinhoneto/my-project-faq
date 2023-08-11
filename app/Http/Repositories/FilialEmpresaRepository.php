@@ -47,7 +47,8 @@ class FilialEmpresaRepository{
         $filialempresa->cnpj  = $cnpj;
         $filialempresa->telefone = $telefone; 
         $filialempresa->status = $status;
-        $filialempresa->inscricao_estadual = $inscricao_estadual;     
+        $filialempresa->inscricao_estadual = $inscricao_estadual; 
+    
         $filialempresa->update();
         
         return $filialempresa->fresh();

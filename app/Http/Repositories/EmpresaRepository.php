@@ -21,7 +21,7 @@ class EmpresaRepository{
         return Empresa::findOrFail($id);
     }
 
-    public function save($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id)
+    public function save($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id,$status)
     {
         
         $empresa = new $this->empresa;
@@ -35,13 +35,14 @@ class EmpresaRepository{
         $empresa->tipo_empresa_id = $tipo_empresa_id;
         $empresa->natureza_empresa_id = $natureza_empresa_id; 
         $empresa->inscricao_empresa_id = $inscricao_empresa_id; 
-        
+        $empresa->status = $status;
+
         $empresa->save();
         
         return $empresa->fresh();
     }
 
-    public function update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id)
+    public function update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id,$status)
     {   
         $empresa = $this->empresa->find($id);   
         $empresa->nome = $nome;
@@ -53,13 +54,14 @@ class EmpresaRepository{
         $empresa->tipo_empresa_id = $tipo_empresa_id;
         $empresa->natureza_empresa = $natureza_empresa_id; 
         $empresa->inscricao_empresa_id = $inscricao_empresa_id; 
+        $empresa->status = $status;
 
         $empresa->update();
         
         return $empresa->fresh();
     }    
 
-    public function update_destroy($id)
+    public function alterar_status($id)
     {
         if($id != null ){
             $empresa = $this->empresa->findOrFail($id);

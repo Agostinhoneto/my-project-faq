@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FilialEmpresaRequest;
 use App\HttpStatusCodes;
+use App\Messages;
 use App\Models\FilialEmpresa;
 use Illuminate\Support\Facades\Validator;
 use App\Services\FilialEmpresaService;
@@ -23,13 +24,9 @@ class FilialEmpresaController extends Controller
         $limit = 10;
         try {
             $result['data'] = $this->filialEmpresaService->getAll($limit);
-            return response()->json([
-                'message' => 'Dados retornados com Sucesso',
-            ], HttpStatusCodes::OK, $result);
+            return response()->json([Messages::SUCCESS_MESSAGE,HttpStatusCodes::OK]);
         } catch (Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao tentar trazer os Dados',
-            ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
+            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -37,11 +34,9 @@ class FilialEmpresaController extends Controller
     {
         try {
             $result['data'] = $this->filialEmpresaService->getById($id);
-            return response()->json(['message' => 'Retorno do valor com sucesso!', HttpStatusCodes::OK, $result]);
+            return response()->json([Messages::SUCCESS_MESSAGE,HttpStatusCodes::OK]);
         } catch (Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao tentar trazer os Dados',
-            ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
+            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -69,13 +64,11 @@ class FilialEmpresaController extends Controller
                 $inscricao_estadual
             );
             DB::commit();
-            return response()->json(['message' => 'Filial criada com sucesso!', HttpStatusCodes::CREATED]);
+            return response()->json([Messages::SAVE_MESSAGE,HttpStatusCodes::OK]);
         } catch (Exception $e) {
             dd($e);
             DB::roolBack();
-            return response()->json([
-                'message' => 'Erro ao criar os Dados',
-            ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
+            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -102,12 +95,10 @@ class FilialEmpresaController extends Controller
             );
 
             DB::commit();
-            return response()->json(['message' => 'Empresa atualizada com sucesso!', HttpStatusCodes::OK]);
+            return response()->json([Messages::UPDATE_MESSAGE,HttpStatusCodes::OK]);
         } catch (Exception $e) {
             DB::roolBack();
-            return response()->json([
-                'message' => 'Erro ao atualizar os Dados',
-            ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
+            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -118,13 +109,10 @@ class FilialEmpresaController extends Controller
             $filial = FilialEmpresa::where('id', $id)->update(['status' => 0]);
             $this->filialEmpresaService->deleteById($filial);
             DB::commit();
-            return response()->json(['message' => 'Empresa Deletado com sucesso!', HttpStatusCodes::OK]);
+            return response()->json([Messages::DELETE_MESSAGE,HttpStatusCodes::OK]);
         } catch (Exception $e) {
             DB::roolBack();
-            dd($e);
-            return response()->json([
-                'message' => 'Erro ao deletar os Dados',
-            ], HttpStatusCodes::INTERNAL_SERVER_ERROR);
+            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 }
