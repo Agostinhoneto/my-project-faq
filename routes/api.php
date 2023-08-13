@@ -49,7 +49,7 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(EmpresaController::class)->group(function () {
     Route::get('/empresa/index','index');
-    Route::get('/empresa/register','register');
+    Route::post('/empresa/register','register');
     Route::get('/empresa/show/{id}','show');
     Route::put('/empresa/update/{id}','update'); 
     Route::delete('/empresa/alterar_status/{id}','alterar_status');
@@ -58,7 +58,7 @@ Route::controller(EmpresaController::class)->group(function () {
 
 Route::controller(FilialEmpresaController::class)->group(function () {
     Route::get('/filial/index','index');
-    Route::get('/filial/register','register');
+    Route::post('/filial/register','register');
     Route::get('/filial/show/{id}','show');
     Route::put('/filial/update/{id}','update'); 
     Route::delete('/filial/alterar_status/{id}','alterar_status');

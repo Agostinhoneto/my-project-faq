@@ -21,7 +21,7 @@ class AuthController extends Controller
 
     public function __construct(private UserService $userService)
     {
-       //$this->middleware('auth:api', ['except' => ['login']]);
+    //   $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     public function index(){

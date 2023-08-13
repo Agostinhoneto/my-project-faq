@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use App\Services\EmpresaService;
 use App\HttpStatusCodes; 
 use App\Messages;
+use App\Models\User;
 use GuzzleHttp\Psr7\Message;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -20,7 +22,7 @@ class EmpresaController extends Controller
     public function __construct(private EmpresaService $empresaService)
     {
         $this->empresaService = $empresaService;
-        // $this->middleware('auth:api', ['except' => ['login','register','store']]);  
+        //$this->middleware('auth:api', ['except' => ['login']]);  
     }
 
     public function index()
@@ -51,6 +53,7 @@ class EmpresaController extends Controller
 
     public function register(EmpresaRequest $request)
     {  
+        $user_id = Auth::user(); // Obtém o usuário autenticado
         $dados = [
             $user_id              = $request->input('user_id'),
             $nome                 = $request->input('nome'),
@@ -62,7 +65,7 @@ class EmpresaController extends Controller
             $tipo_empresa_id      = $request->input('tipo_empresa_id'),
             $natureza_empresa_id  = $request->input('natureza_empresa_id'),
             $inscricao_empresa_id = $request->input('inscricao_empresa_id'),
-            $status              = $request->input('status'), 
+            $status               = $request->input('status'), 
         ];
         
         DB::beginTransaction();
