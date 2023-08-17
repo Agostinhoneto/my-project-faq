@@ -4,11 +4,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Role;
 use Laravel\Sanctum\HasApiTokens;
-//use Tymon\JWTAuth\Contracts\JWTSubject;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -56,12 +55,6 @@ class User extends Authenticatable implements JWTSubject
     public function groups(){
         return $this->belongsToMany(Group::class,'user_group');
     }
-
-  /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -75,12 +68,11 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
-        return [
-        ];
     }
-    
+    /*
     public function isAdmin():bool
     {
         return $this->roles()->where('name','admin')->exists();
     }
+    */
 }

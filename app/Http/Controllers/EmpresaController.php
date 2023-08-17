@@ -69,12 +69,11 @@ class EmpresaController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
     */
-    $user = auth()->user();
-        dd($user);
+  
         
-    //    $user_id = FacadesJWTAuth::user();
+        $user_id = FacadesJWTAuth::user();
         // // Obtém o usuário autenticado
-      //  dd($user_id);
+        dd($user_id);
         
             $user_id              = $request->input('user_id');
             $nome                 = $request->input('nome');
