@@ -43,18 +43,5 @@ class LoginController extends Controller
             ]);
 
     }
-
-    /*
-    public function login(Request $request)
-    {
-       
-       if(!Auth::attempt($request->only('email','password')))
-       {
-            Helper::sendError('email errado ou senha');
-       }
-
-       return new UserResource(auth()->user());
-    }     
-    */
 }
 

@@ -68,7 +68,6 @@ class EmpresaController extends Controller
             $natureza_empresa_id  = $request->input('natureza_empresa_id');
             $inscricao_empresa_id = $request->input('inscricao_empresa_id');
             $status               = $request->input('status');
-        
         DB::beginTransaction();
         try {
             $result['data'] =  $this->empresaService->register(
@@ -87,6 +86,7 @@ class EmpresaController extends Controller
             DB::commit();
             return response()->json([Messages::SAVE_MESSAGE, HttpStatusCodes::CREATED]);
         } catch (Exception $e) {
+            dd($e);
             DB::roolBack();
             return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
