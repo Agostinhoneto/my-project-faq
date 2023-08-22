@@ -56,25 +56,7 @@ class EmpresaController extends Controller
 
     public function register(EmpresaRequest $request)
     {
-        /*
-        $credentials = $request->only('code', 'password', 'mobile');
-        try {
-            // verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
-            }
-        } 
-        catch (JWTException $e) {
-            // something went wrong
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
-    */
-  
-        
-        $user_id = FacadesJWTAuth::user();
-        // // Obtém o usuário autenticado
-        dd($user_id);
-        
+            $user_id = FacadesJWTAuth::user();
             $user_id              = $request->input('user_id');
             $nome                 = $request->input('nome');
             $nome_social          = $request->input('nome_social');

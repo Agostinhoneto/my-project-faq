@@ -48,13 +48,11 @@ class UserSeeder extends Seeder
             $user_view,
             $user_delete        
         ]);
-
         $user = User::create([
             'name' => 'Usuario',
             'email' => 'user@user.com',
             'password' => bcrypt('password')
         ]);
-
         $user_role = Role::create(['name' => 'usuario']); 
        
         $user->assignRole($user_role);
@@ -66,6 +64,6 @@ class UserSeeder extends Seeder
         $user_role->givePermissionTo([
             $user_list,
         ]);
- 
+      
     }
 }
