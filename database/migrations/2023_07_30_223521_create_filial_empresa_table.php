@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('telefone',11);
             $table->boolean('status')->default(1);
             $table->string('inscricao_estadual');
+            $table->string('usuario_cadastrante_id');
+            $table->string('usuario_alterante_id');
             $table->timestamps();
             $table->foreign('empresa_id')->references('id')->on('empresas');
         });
