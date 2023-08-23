@@ -12,13 +12,30 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-       
-       if(!Auth::attempt($request->only('email','password')))
-       {
-            Helper::sendError('email errado ou senha');
-       }
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+        $credentials = $request->only('email', 'password');
 
-       return new UserResource(auth()->user());
-    }     
+        $token = Auth::attempt($credentials);
+        if (!$token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
+        $user = Auth::user();
+        return response()->json([
+                'status' => 'success',
+                'user' => $user,
+                'authorisation' => [
+                    'token' => $token,
+                    'type' => 'bearer',
+                ]
+            ]);
+
+    }
 }
 
