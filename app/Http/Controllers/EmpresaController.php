@@ -18,9 +18,6 @@ use Illuminate\Support\Facades\DB;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth as JWTAuthJWTAuth;
 
-//use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
-//use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
-
 class EmpresaController extends Controller
 {
 
@@ -57,19 +54,21 @@ class EmpresaController extends Controller
     public function register(EmpresaRequest $request)
     {
       
-        $user = auth()->user();
-        dd($user);
-            $user_id              = $request->input('user_id');
-            $nome                 = $request->input('nome');
-            $nome_social          = $request->input('nome_social');
-            $razao_social         = $request->input('razao_social');
-            $cnpj                 = $request->input('cnpj');
-            $telefone             = $request->input('telefone');
-            $email                = $request->input('email');
-            $tipo_empresa_id      = $request->input('tipo_empresa_id');
-            $natureza_empresa_id  = $request->input('natureza_empresa_id');
-            $inscricao_empresa_id = $request->input('inscricao_empresa_id');
-            $status               = $request->input('status');
+            $usuario_logado = auth()->user();
+          //  dd($usuario_cadastrante_id);
+            $user_id                 = $request->input('user_id');
+            $nome                    = $request->input('nome');
+            $nome_social             = $request->input('nome_social');
+            $razao_social            = $request->input('razao_social');
+            $cnpj                    = $request->input('cnpj');
+            $telefone                = $request->input('telefone');
+            $email                   = $request->input('email');
+            $tipo_empresa_id         = $request->input('tipo_empresa_id');
+            $natureza_empresa_id     = $request->input('natureza_empresa_id');
+            $inscricao_empresa_id    = $request->input('inscricao_empresa_id');
+            $status                  = $request->input('status');
+           // $usuario_cadastrante_id  = $request->input('usuario_cadastrante_id');
+            //$usuario_alterante_id    = $request->input('usuario_alterante_id');
         
         DB::beginTransaction();
         try {
@@ -84,11 +83,14 @@ class EmpresaController extends Controller
                 $tipo_empresa_id,
                 $natureza_empresa_id,
                 $inscricao_empresa_id,
-                $status
+                $status,
+                $usuario_logado->id,
+                null
             );
             DB::commit();
             return response()->json([Messages::SAVE_MESSAGE, HttpStatusCodes::CREATED]);
         } catch (Exception $e) {
+            dd($e);
             DB::roolBack();
             return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
@@ -96,6 +98,7 @@ class EmpresaController extends Controller
 
     public function update(EmpresaRequest $request, $id)
     {
+        $usuario_logado = auth()->user();
         $id                    = $request->input('id');
         $nome                  = $request->input('nome');
         $nome_social           = $request->input('nome_social');
@@ -107,7 +110,7 @@ class EmpresaController extends Controller
         $natureza_empresa_id   = $request->input('natureza_empresa_id');
         $inscricao_empresa_id  = $request->input('inscricao_empresa_id');
         $status                = $request->input('status');
-
+     
 
         DB::beginTransaction();
         try {
@@ -122,7 +125,9 @@ class EmpresaController extends Controller
                 $tipo_empresa_id,
                 $natureza_empresa_id,
                 $inscricao_empresa_id,
-                $status
+                $status,
+                null,
+                $usuario_logado->id
             );
             DB::commit();
             return response()->json([Messages::UPDATE_MESSAGE, HttpStatusCodes::OK]);

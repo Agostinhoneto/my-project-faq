@@ -25,11 +25,11 @@ class DatabaseSeeder extends Seeder
 
       // $this->call([UserRolePermissionSeeder::class]);
      
-      $this->call([UserSeeder::class]);
-      //$this->call(NaturezaEmpresaSeeder::class);
+     // $this->call([UserSeeder::class]);
+      $this->call(NaturezaEmpresaSeeder::class);
       //$this->call(TipoEmpresaSeeder::class);
-      //$this->call(InscricaoSociaisSeeder::class);
-      //$this->call([EmpresaSeeder::class]);
+     // $this->call(InscricaoSociaisSeeder::class);
+     // $this->call([EmpresaSeeder::class]);
      // $this->call(EnderecosTableSeeder::class);
       //$this->call(EstadosTableSeeder::class);
       //$this->call(CidadesTableSeeder::class);

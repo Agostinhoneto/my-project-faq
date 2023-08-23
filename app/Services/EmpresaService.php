@@ -29,17 +29,17 @@ class EmpresaService
             ->getById($id);
     }
 
-    public function register($user_id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id,$status)
+    public function register($user_id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id,$status,$usuario_cadastrante_id,$usuario_alterante_id)
     {
         $result = $this->empresaRepository
-            ->save($user_id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id,$status);
+            ->save($user_id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id,$status,$usuario_cadastrante_id,$usuario_alterante_id);
         return $result;
     }
 
-    public function update($id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id,$status)
+    public function update($id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id,$status,$usuario_cadastrante_id,$usuario_alterante_id)
     {
         $result = $this->empresaRepository
-           ->update($id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id,$status);
+           ->update($id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id,$status,$usuario_cadastrante_id,$usuario_alterante_id);
         return $result;
     }
 

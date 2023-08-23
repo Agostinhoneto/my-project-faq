@@ -21,7 +21,7 @@ class EmpresaRepository{
         return Empresa::findOrFail($id);
     }
 
-    public function save($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id,$status)
+    public function save($user_id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id,$status,$usuario_cadastrante_id,$usuario_alterante_id)
     {
         
         $empresa = new $this->empresa;
@@ -36,13 +36,14 @@ class EmpresaRepository{
         $empresa->natureza_empresa_id = $natureza_empresa_id; 
         $empresa->inscricao_empresa_id = $inscricao_empresa_id; 
         $empresa->status = $status;
-
+        $empresa->usuario_cadastrante_id = $usuario_cadastrante_id;
+        $empresa->usuario_alterante_id = $usuario_alterante_id;
         $empresa->save();
         
         return $empresa->fresh();
     }
 
-    public function update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id,$status)
+    public function update($id,$nome,$nome_social,$razao_social,$cnpj,$telefone,$email,$tipo_empresa_id,$natureza_empresa_id,$inscricao_empresa_id,$status,$usuario_cadastrante_id,$usuario_alterante_id)
     {   
         $empresa = $this->empresa->find($id);   
         $empresa->nome = $nome;
@@ -53,7 +54,9 @@ class EmpresaRepository{
         $empresa->email = $email;
         $empresa->tipo_empresa_id = $tipo_empresa_id;
         $empresa->natureza_empresa = $natureza_empresa_id; 
-        $empresa->inscricao_empresa_id = $inscricao_empresa_id; 
+        $empresa->inscricao_empresa_id = $inscricao_empresa_id;
+        $empresa->usuario_cadastrante_id = $usuario_cadastrante_id;
+        $empresa->usuario_alterante_id = $usuario_alterante_id; 
         $empresa->status = $status;
 
         $empresa->update();
@@ -63,11 +66,11 @@ class EmpresaRepository{
 
     public function alterar_status($id)
     {
+        $empresa = null;
         if($id != null ){
             $empresa = $this->empresa->findOrFail($id);
             $empresa->update();
         } 
         return $empresa;  
     }
-
 }    
