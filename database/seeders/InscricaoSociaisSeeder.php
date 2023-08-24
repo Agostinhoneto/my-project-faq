@@ -15,7 +15,6 @@ class InscricaoSociaisSeeder extends Seeder
      */
     public function run()
     {
-        // Exemplo:
         InscricaoSociais::create([
             'id' => 1,
             
