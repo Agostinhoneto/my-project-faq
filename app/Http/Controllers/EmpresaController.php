@@ -27,7 +27,7 @@ class EmpresaController extends Controller
     public function __construct(private EmpresaService $empresaService)
     {
         $this->empresaService = $empresaService;
-        //$this->middleware('auth:api', ['except' => ['login']]);  
+        //$this->middleware('auth:api', ['except' => ['login']]);
     }
 
     public function index()
@@ -56,38 +56,19 @@ class EmpresaController extends Controller
 
     public function register(EmpresaRequest $request)
     {
-        /*
-        $credentials = $request->only('code', 'password', 'mobile');
-        try {
-            // verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
-            }
-        } 
-        catch (JWTException $e) {
-            // something went wrong
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
-    */
-    $user = auth()->user();
-        dd($user);
-        
-    //    $user_id = FacadesJWTAuth::user();
-        // // Obtém o usuário autenticado
-      //  dd($user_id);
-        
-            $user_id              = $request->input('user_id');
-            $nome                 = $request->input('nome');
-            $nome_social          = $request->input('nome_social');
-            $razao_social         = $request->input('razao_social');
-            $cnpj                 = $request->input('cnpj');
-            $telefone             = $request->input('telefone');
-            $email                = $request->input('email');
-            $tipo_empresa_id      = $request->input('tipo_empresa_id');
-            $natureza_empresa_id  = $request->input('natureza_empresa_id');
-            $inscricao_empresa_id = $request->input('inscricao_empresa_id');
-            $status               = $request->input('status');
-        
+        $user = auth()->user();
+        $user_id              = $request->input('user_id');
+        $nome                 = $request->input('nome');
+        $nome_social          = $request->input('nome_social');
+        $razao_social         = $request->input('razao_social');
+        $cnpj                 = $request->input('cnpj');
+        $telefone             = $request->input('telefone');
+        $email                = $request->input('email');
+        $tipo_empresa_id      = $request->input('tipo_empresa_id');
+        $natureza_empresa_id  = $request->input('natureza_empresa_id');
+        $inscricao_empresa_id = $request->input('inscricao_empresa_id');
+        $status               = $request->input('status');
+
         DB::beginTransaction();
         try {
             $result['data'] =  $this->empresaService->register(

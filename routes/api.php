@@ -15,27 +15,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return new UserResource($request->user());
 });
 
-/*
-Route::middleware(['auth','is_admin'])->group(function(){
-    Route::get('/admin',[AuthController::class,'admin']);
-});
-*/
-/*
-Route::middleware(['admin'])->group(function(){
-    Route::get('/admin',[AuthController::class,'admin']);
-});
-*/
 Route::post('/login',[LoginController::class,'login']);
-
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
-    Route::post('register', 'register')->middleware('AdminMiddleware');  
+    Route::post('register', 'register')->middleware('AdminMiddleware');
     Route::get('get_user', 'get_user');
     Route::get('index','index');
     Route::get('show/{id}','show');
-    Route::put('update/{id}','update'); 
+    Route::put('update/{id}','update');
     Route::delete('destroy/{id}','destroy');
 });
 
@@ -43,7 +32,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(AuthController::class)->group(function () {
     Route::get('index','index');
     Route::get('show/{id}','show');
-    Route::put('update/{id}','update'); 
+    Route::put('update/{id}','update');
     Route::delete('destroy/{id}','destroy');
 });
 
@@ -51,7 +40,7 @@ Route::controller(EmpresaController::class)->group(function () {
     Route::get('/empresa/index','index');
     Route::post('/empresa/register','register');
     Route::get('/empresa/show/{id}','show');
-    Route::put('/empresa/update/{id}','update'); 
+    Route::put('/empresa/update/{id}','update');
     Route::delete('/empresa/alterar_status/{id}','alterar_status');
 
 });
@@ -60,7 +49,7 @@ Route::controller(FilialEmpresaController::class)->group(function () {
     Route::get('/filial/index','index');
     Route::post('/filial/register','register');
     Route::get('/filial/show/{id}','show');
-    Route::put('/filial/update/{id}','update'); 
+    Route::put('/filial/update/{id}','update');
     Route::delete('/filial/alterar_status/{id}','alterar_status');
 });
 
@@ -73,13 +62,3 @@ Route::controller(RoleController::class)->group(function () {
     Route::post('attachPermission','attachPermission');
     Route::get('getPermissions/{roleParam}','getPermissions');
 });
-
-
-
-
-
-
-
-
-
-
