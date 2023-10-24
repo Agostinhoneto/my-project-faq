@@ -30,6 +30,9 @@ class Empresa extends Model
         return $this->belongsTo(Inscricao_social::class);
     }
 
+    public function contratos()
+    {
+        return $this->hasMany(Contratos::class);
+    }
+
 }
-
-
