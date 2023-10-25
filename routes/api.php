@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContratosController;
 use App\Http\Controllers\RoleController;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\EmpresaController;
@@ -61,4 +62,12 @@ Route::controller(RoleController::class)->group(function () {
     Route::get('getUserRole/{userId}/roles','getUserRole');
     Route::post('attachPermission','attachPermission');
     Route::get('getPermissions/{roleParam}','getPermissions');
+});
+
+Route::controller(ContratosController::class)->group(function () {
+    Route::get('/contratos/index','index');
+    Route::post('/contratos/register','register');
+    Route::get('/contratos/show/{id}','show');
+    Route::put('/contratos/update/{id}','update');
+    Route::delete('/contratos/alterar_status/{id}','alterar_status');
 });

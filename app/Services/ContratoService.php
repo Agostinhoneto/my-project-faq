@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Repositories\ContratoRepository;
 use App\Http\Repositories\EmpresaRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -35,10 +36,10 @@ class ContratoService
         return $result;
     }
 
-    public function update($id,$valor,$nome_social,$data_inicio,$data_fim,$usuario_modificante_id)
+    public function update($id,$valor,$data_inicio,$data_fim,$usuario_modificante_id)
     {
         $result = $this->contratoRepository
-           ->update($valor,$data_inicio, $data_fim, $usuario_modificante_id);
+           ->update($id,$valor,$data_inicio, $data_fim, $usuario_modificante_id);
         return $result;
     }
 
