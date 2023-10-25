@@ -29,17 +29,17 @@ class ContratoService
             ->getById($id);
     }
 
-    public function register($valor,$data_inicio, $data_fim,$usuario_cadastrante_id)
+    public function register($valor,$data_inicio, $data_fim,$usuario_cadastrante_id,$empresa_id)
     {
         $result = $this->contratoRepository
-            ->save($valor,$data_inicio, $data_fim, $usuario_cadastrante_id);
+            ->save($valor,$data_inicio, $data_fim, $usuario_cadastrante_id,$empresa_id);
         return $result;
     }
 
-    public function update($id,$valor,$data_inicio,$data_fim,$usuario_modificante_id)
+    public function update($id,$valor,$data_inicio,$data_fim,$usuario_modificante_id,$empresa_id)
     {
         $result = $this->contratoRepository
-           ->update($id,$valor,$data_inicio, $data_fim, $usuario_modificante_id);
+           ->update($id,$valor,$data_inicio, $data_fim, $usuario_modificante_id,$empresa_id);
         return $result;
     }
 

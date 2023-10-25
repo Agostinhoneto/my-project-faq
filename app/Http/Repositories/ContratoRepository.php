@@ -25,7 +25,7 @@ class ContratoRepository
     {
         return Contratos::findOrFail($id);
     }
-/*
+
     public function save($user_id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id, $status)
     {
 
@@ -57,5 +57,4 @@ class ContratoRepository
         }
         return $contratos;
     }
-    */
 }
