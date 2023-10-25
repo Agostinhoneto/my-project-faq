@@ -18,16 +18,18 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('nome');
             $table->string('nome_social');
-            $table->string('razao_social');           
+            $table->string('razao_social');
             $table->integer('cnpj');
             $table->integer('telefone');
             $table->string('email');
             $table->boolean('status')->default(1);;
-            $table->timestamps();          
+            $table->timestamps();
+            $table->unsignedBigInteger('usuario_modificante_id');
+            $table->foreign('usuario_modificante_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
-    
+
 
     /**
      * Reverse the migrations.

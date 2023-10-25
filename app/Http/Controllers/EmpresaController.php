@@ -35,7 +35,7 @@ class EmpresaController extends Controller
         $limit = 10;
         try {
             $result['data'] = $this->empresaService->getAll($limit);
-            return response()->json([Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
+            return response()->json($result['data'],[Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
             return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
@@ -46,7 +46,7 @@ class EmpresaController extends Controller
         try {
             if (!empty($id)) {
                 $result['data'] = $this->empresaService->getById($id);
-                return response()->json([Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
+                return response()->json($result['data'],[Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
             }
         } catch (Exception $e) {
             return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
@@ -85,7 +85,7 @@ class EmpresaController extends Controller
                 $status
             );
             DB::commit();
-            return response()->json([Messages::SAVE_MESSAGE, HttpStatusCodes::CREATED]);
+            return response()->json($result['data'],[Messages::SAVE_MESSAGE, HttpStatusCodes::CREATED]);
         } catch (Exception $e) {
             DB::roolBack();
             return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
@@ -123,7 +123,7 @@ class EmpresaController extends Controller
                 $status
             );
             DB::commit();
-            return response()->json([Messages::UPDATE_MESSAGE, HttpStatusCodes::OK]);
+            return response()->json($result['data'],[Messages::UPDATE_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
             DB::roolBack();
             return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
@@ -135,9 +135,9 @@ class EmpresaController extends Controller
         DB::beginTransaction();
         try {
             $empresa = Empresa::where('id', $id)->update(['status' => 0]);
-            $this->empresaService->deleteById($empresa);
+            $result['data'] = $this->empresaService->deleteById($empresa);
             DB::commit();
-            return response()->json([Messages::DELETE_MESSAGE, HttpStatusCodes::OK]);
+            return response()->json($result['data'],[Messages::DELETE_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
             DB::roolBack();
             return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
