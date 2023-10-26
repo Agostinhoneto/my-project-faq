@@ -23,7 +23,8 @@ class ContratosController extends Controller
             $result['data'] = $this->contratoService->getAll($limit);
             return response()->json($result['data'], [Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
+           // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -36,7 +37,8 @@ class ContratosController extends Controller
             $result['data'] = $this->contratoService->getById($id);
             return response()->json($result['data'], [Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
+            // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -64,7 +66,9 @@ class ContratosController extends Controller
             return response()->json($result['data'], [Messages::SAVE_MESSAGE, HttpStatusCodes::CREATED]);
         } catch (Exception $e) {
             DB::roolBack();
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
+
+          //  return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -94,7 +98,8 @@ class ContratosController extends Controller
             return response()->json($result['data'], [Messages::UPDATE_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
             DB::roolBack();
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
+           // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -108,7 +113,8 @@ class ContratosController extends Controller
             return response()->json($result['data'], [Messages::DELETE_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
             DB::roolBack();
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
+           // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 }
