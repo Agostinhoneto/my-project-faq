@@ -31,8 +31,8 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(EmpresaController::class)->group(function () {
     Route::get('/empresa/index','index');
-    Route::post('/empresa/register','register')->middleware('register.empresa');
-    Route::get('/empresa/show/{id}','show')->middleware('show.empresa');
+    Route::post('/empresa/register','register');
+    Route::get('/empresa/show/{id}','show');
     Route::put('/empresa/update/{id}','update');
     Route::delete('/empresa/alterar_status/{id}','alterar_status');
 
