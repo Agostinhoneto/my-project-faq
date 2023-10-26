@@ -47,6 +47,7 @@ class ContratoRepository
         $contratos->data_fim = $data_fim;
         $contratos->usuario_modificante_id = $usuario_modificante_id;
         $contratos->empresa_id = $empresa_id;
+        $contratos->status = $status;
         $contratos->update();
 
         return $contratos->fresh();
