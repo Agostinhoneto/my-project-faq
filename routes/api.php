@@ -20,26 +20,18 @@ Route::post('/login',[LoginController::class,'login']);
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout')->name('auth_logout');
-    Route::post('refresh', 'refresh');
+    Route::post('refresh', 'refresh')->name('refresh');
     Route::post('register', 'register')->middleware('AdminMiddleware');
-    Route::get('get_user', 'get_user');
-    Route::get('index','index');
-    Route::get('show/{id}','show');
-    Route::put('update/{id}','update');
-    Route::delete('destroy/{id}','destroy');
-});
-
-
-Route::controller(AuthController::class)->group(function () {
-    Route::get('index','index');
-    Route::get('show/{id}','show');
-    Route::put('update/{id}','update');
-    Route::delete('destroy/{id}','destroy');
+    Route::get('get_user', 'get_user')->name('refresh');
+    Route::get('index','index')->name('index.auth');
+    Route::get('show/{id}','show')->name('show.auth');
+    Route::put('update/{id}','update')->name('update.auth');
+    Route::delete('destroy/{id}','destroy')->name('destroy.auth');
 });
 
 Route::controller(EmpresaController::class)->group(function () {
-    Route::get('/empresa/index','index');
-    Route::post('/empresa/register','register');
+    Route::get('/empresa/index','index')->name('index.empresa');
+    Route::post('/empresa/register','register')->name('register.empresa');
     Route::get('/empresa/show/{id}','show');
     Route::put('/empresa/update/{id}','update');
     Route::delete('/empresa/alterar_status/{id}','alterar_status');

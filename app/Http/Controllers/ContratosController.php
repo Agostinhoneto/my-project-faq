@@ -103,7 +103,7 @@ class ContratosController extends Controller
         DB::beginTransaction();
         try {
             $contrato = Contratos::where('id', $id)->update(['status' => $status]); // entrar no services , e verificar a condição.
-           // $result['data'] = $this->contratoService->deleteById($contrato);
+            $result['data'] = $this->contratoService->deleteById($contrato);
             DB::commit();
             return response()->json($result['data'], [Messages::DELETE_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
