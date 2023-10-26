@@ -34,7 +34,9 @@ class EmpresaController extends Controller
             $result['data'] = $this->empresaService->getAll($limit);
             return response()->json($result['data'],[Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
+
+          //  return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -46,7 +48,9 @@ class EmpresaController extends Controller
                 return response()->json($result['data'],[Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
             }
         } catch (Exception $e) {
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
+
+           // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -85,7 +89,9 @@ class EmpresaController extends Controller
             return response()->json($result['data'],[Messages::SAVE_MESSAGE, HttpStatusCodes::CREATED]);
         } catch (Exception $e) {
             DB::roolBack();
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
+
+           // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -123,7 +129,8 @@ class EmpresaController extends Controller
             return response()->json($result['data'],[Messages::UPDATE_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
             DB::roolBack();
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
+            // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -137,7 +144,8 @@ class EmpresaController extends Controller
             return response()->json($result['data'],[Messages::DELETE_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
             DB::roolBack();
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
+            // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 }
