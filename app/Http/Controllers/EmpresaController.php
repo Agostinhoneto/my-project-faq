@@ -18,9 +18,6 @@ use Illuminate\Support\Facades\DB;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth as JWTAuthJWTAuth;
 
-//use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
-//use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
-
 class EmpresaController extends Controller
 {
 

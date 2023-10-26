@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('cnpj');
             $table->integer('telefone');
             $table->string('email');
-            $table->boolean('status')->default(1);;
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->unsignedBigInteger('usuario_modificante_id');
             $table->foreign('usuario_modificante_id')->references('id')->on('users')->onDelete('cascade');

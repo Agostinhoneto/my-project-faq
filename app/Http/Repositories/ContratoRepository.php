@@ -26,24 +26,27 @@ class ContratoRepository
         return Contratos::findOrFail($id);
     }
 
-    public function save($user_id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id, $status)
+    public function save($valor,$data_inicio, $data_fim, $usuario_cadastrante_id,$empresa_id, $status)
     {
 
         $contratos = new $this->contratos;
-        $contratos->user_id = $user_id;
-        $contratos->nome = $nome;
-        $contratos->nome_social = $nome_social;
-        $contratos->razao_social = $razao_social;
+        $contratos->valor = $valor;
+        $contratos->data_inicio = $data_inicio;
+        $contratos->data_fim = $data_fim;
+        $contratos->usuario_cadastrante_id = $usuario_cadastrante_id;
+        $contratos->empresa_id = $empresa_id;
         $contratos->save();
         return $contratos->fresh();
     }
 
-    public function update($id, $nome, $nome_social, $razao_social, $cnpj, $telefone, $email, $tipo_empresa_id, $natureza_empresa_id, $inscricao_empresa_id, $status)
+    public function update($id, $valor,$data_inicio, $data_fim, $usuario_modificante_id,$empresa_id, $status)
     {
         $contratos = $this->contratos->find($id);
-        $contratos->nome = $nome;
-        $contratos->nome_social = $nome_social;
-        $contratos->razao_social = $razao_social;
+        $contratos->valor = $valor;
+        $contratos->data_inicio = $data_inicio;
+        $contratos->data_fim = $data_fim;
+        $contratos->usuario_modificante_id = $usuario_modificante_id;
+        $contratos->empresa_id = $empresa_id;
         $contratos->update();
 
         return $contratos->fresh();
