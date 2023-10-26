@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('empresas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('nome');
             $table->string('nome_social');
             $table->string('razao_social');
@@ -24,8 +23,11 @@ return new class extends Migration
             $table->string('email');
             $table->boolean('status')->default(1);
             $table->timestamps();
+            $table->unsignedBigInteger('usuario_cadastrante_id');
+            $table->foreign('usuario_cadastrante_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('usuario_modificante_id');
             $table->foreign('usuario_modificante_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
