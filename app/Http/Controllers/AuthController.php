@@ -14,7 +14,10 @@ use PHPOpenSourceSaver\JWTAuth\JWTAuth;
 use App\Services\UserService;
 use Exception;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Log;
+
 
 class AuthController extends Controller
 {
@@ -25,18 +28,14 @@ class AuthController extends Controller
     }
 
     public function index(){
-        $result = ['status' => Response::HTTP_OK];
-        
         try {
-            $result['data'] = $this->userService->getAll(); 
-        }   
-        catch(Exception $e) {
-            $result = [
-                'status' =>Response::HTTP_INTERNAL_SERVER_ERROR,
-                'error' =>$e->getMessage()
-            ];
+            $result['data'] = $this->userService->getAll();
+            return response()->json($result,Response::HTTP_OK);
         }
-        return response()->json($result,$result['status']);
+        catch(Exception $e) {
+            Log::error($e->getMessage());
+           //return response()->json([],Reponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function show($id){
@@ -54,18 +53,18 @@ class AuthController extends Controller
     }
 
     public function register(UserFormRequest $request)
-    {  
+    {
         $dados = $request->except('_token');
         if($dados != '')
-        {   
+        {
             if(!auth()->user() || !auth()->user->isAdmin)
-            {   
+            {
                 $user = User::create([
                     'name' =>$request->name,
                     'email' =>$request->email,
                     'password' =>bcrypt($request->password)
                 ]);
-                
+
                 $user_role = Role::where(['name' => 'admin'])->first();
                 if($user_role){
                     $user->assignRole($user_role);
@@ -74,7 +73,7 @@ class AuthController extends Controller
             }
         }
 
-        
+
         /*
         $name = $request->input('name');
         $email = $request->input('email');
@@ -107,7 +106,7 @@ class AuthController extends Controller
             $result['data'] = $this->userService->update($id,$name,$email,$password);
         } catch(Exception $e) {
             $result = [
-                'status' =>Response::HTTP_INTERNAL_SERVER_ERROR, 
+                'status' =>Response::HTTP_INTERNAL_SERVER_ERROR,
                 'error' => $e->getMessage()
             ];
         }
@@ -128,9 +127,9 @@ class AuthController extends Controller
         return response()->json($result,$result['status']);
     }
 
- 
-   
- 
+
+
+
     public function logout(Request $request)
     {
         //valid credential
@@ -142,10 +141,10 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()], 200);
         }
-		//Request is validated, do logout        
+		//Request is validated, do logout
         try {
             JWTAuth::invalidate($request->token);
- 
+
             return response()->json([
                 'success' => true,
                 'message' => 'User has been logged out'
@@ -157,15 +156,15 @@ class AuthController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
- 
+
     public function get_user(Request $request)
     {
         $this->validate($request, [
             'token' => 'required'
         ]);
- 
+
         $user = JWTAuth::authenticate($request->token);
- 
+
         return response()->json(['user' => $user]);
     }
 

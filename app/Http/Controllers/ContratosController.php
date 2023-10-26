@@ -30,10 +30,11 @@ class ContratosController extends Controller
     public function show($id)
     {
         try {
-            if (!empty($id)) {
-                $result['data'] = $this->contratoService->getById($id);
-                return response()->json($result['data'], [Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
+            if (empty($id)) {
+                return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
             }
+            $result['data'] = $this->contratoService->getById($id);
+            return response()->json($result['data'], [Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
             return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
@@ -47,7 +48,6 @@ class ContratosController extends Controller
         $data_inicio               = $request->input('data_inicio');
         $data_fim                  = $request->input('data_fim');
         $empresa_id                = $request->input('empresa_id');
-        $usuario_cadastrante_id    = $request->input('usuario_cadastrante_id');
         $status                    = $request->input('status');
 
         DB::beginTransaction();
@@ -70,13 +70,12 @@ class ContratosController extends Controller
 
     public function update(ContratoRequest $request, $id)
     {
-        $id                    = $request->input('id');
-        $usuario_cadastrante_id = auth()->user();
+        $id                        = $request->input('id');
+        $usuario_modificante_id    = auth()->user();
         $valor                     = $request->input('valor');
         $data_inicio               = $request->input('data_inicio');
         $data_fim                  = $request->input('data_fim');
         $empresa_id                = $request->input('empresa_id');
-        $usuario_cadastrante_id    = $request->input('usuario_cadastrante_id');
         $status                    = $request->input('status');
 
 
@@ -88,7 +87,7 @@ class ContratosController extends Controller
                 $data_inicio,
                 $data_fim,
                 $empresa_id,
-                $usuario_cadastrante_id,
+                $usuario_modificante_id,
                 $status
             );
             DB::commit();
@@ -99,12 +98,12 @@ class ContratosController extends Controller
         }
     }
 
-    public function alterar_status($id)
+    public function alterar_status($id,$status)
     {
         DB::beginTransaction();
         try {
-            $contrato = Contratos::where('id', $id)->update(['status' => 0]);
-            $result['data'] = $this->contratoService->deleteById($contrato);
+            $contrato = Contratos::where('id', $id)->update(['status' => $status]); // entrar no services , e verificar a condição.
+           // $result['data'] = $this->contratoService->deleteById($contrato);
             DB::commit();
             return response()->json($result['data'], [Messages::DELETE_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {

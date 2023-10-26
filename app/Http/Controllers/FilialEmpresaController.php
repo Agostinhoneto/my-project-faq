@@ -42,15 +42,15 @@ class FilialEmpresaController extends Controller
 
 
 
-    public function register(FilialEmpresaRequest $request) 
+    public function register(FilialEmpresaRequest $request)
     {
-        
+
         $dados = [
             $empresa_id          = $request->input('empresa_id'),
             $nome_fantasia       = $request->input('nome_fantasia'),
             $cnpj                = $request->input('cnpj'),
             $telefone            = $request->input('telefone'),
-            $status              = $request->input('status'), 
+            $status              = $request->input('status'),
             $inscricao_estadual  = $request->input('inscricao_estadual'),
         ];
         DB::beginTransaction();
@@ -80,7 +80,7 @@ class FilialEmpresaController extends Controller
             $nome_fantasia       = $request->input('nome_fantasia'),
             $cnpj                = $request->input('cnpj'),
             $telefone            = $request->input('telefone'),
-            $status              = $request->input('status'), 
+            $status              = $request->input('status'),
             $inscricao_estadual  = $request->input('inscricao_estadual'),
         ];
         DB::beginTransaction();
@@ -102,11 +102,11 @@ class FilialEmpresaController extends Controller
         }
     }
 
-    public function alterar_status($id)
+    public function alterar_status($id,$status)
     {
         DB::beginTransaction();
-        try {            
-            $filial = FilialEmpresa::where('id', $id)->update(['status' => 0]);
+        try {
+            $filial = FilialEmpresa::where('id', $id)->update(['status' => $status]);
             $this->filialEmpresaService->deleteById($filial);
             DB::commit();
             return response()->json([Messages::DELETE_MESSAGE,HttpStatusCodes::OK]);

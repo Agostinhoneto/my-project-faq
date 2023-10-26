@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login',[LoginController::class,'login']);
 
 Route::controller(AuthController::class)->group(function () {
-    Route::post('logout', 'logout');
+    Route::post('logout', 'logout')->name('auth_logout');
     Route::post('refresh', 'refresh');
     Route::post('register', 'register')->middleware('AdminMiddleware');
     Route::get('get_user', 'get_user');

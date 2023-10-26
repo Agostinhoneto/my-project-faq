@@ -127,11 +127,11 @@ class EmpresaController extends Controller
         }
     }
 
-    public function alterar_status($id)
+    public function alterar_status($id,$status)
     {
         DB::beginTransaction();
         try {
-            $empresa = Empresa::where('id', $id)->update(['status' => 0]);
+            $empresa = Empresa::where('id', $id)->update(['status' => $status]); // services
             $result['data'] = $this->empresaService->deleteById($empresa);
             DB::commit();
             return response()->json($result['data'],[Messages::DELETE_MESSAGE, HttpStatusCodes::OK]);
