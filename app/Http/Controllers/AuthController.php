@@ -44,12 +44,15 @@ class AuthController extends Controller
             $result['data'] = $this->userService->getById($id);
         }
         catch(Exception $e){
+            Log::error($e->getMessage());
+              /*
             $result = [
                 'status' =>Response::HTTP_INTERNAL_SERVER_ERROR,
                 'error' => $e->getMessage()
             ];
+            */
         }
-        return response()->json($result,$result['status']);
+       // return response()->json($result,$result['status']);
     }
 
     public function register(UserFormRequest $request)
@@ -72,27 +75,6 @@ class AuthController extends Controller
                 return new UserResource($user);
             }
         }
-
-
-        /*
-        $name = $request->input('name');
-        $email = $request->input('email');
-        $password = Crypt::encryptString('password');
-        $result = ['status' =>Response::HTTP_OK];
-        try {
-            $result['data'] =  $this->userService->register(
-            $name,
-            $email,
-            $password);
-        } catch(Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'não foi possível criar email.',
-            ],Response::HTTP_INTERNAL_SERVER_ERROR,
-        );
-        }
-        return response()->json($result,$result['status']);
-        */
     }
 
     public function update(Request $request,$id)
@@ -166,10 +148,5 @@ class AuthController extends Controller
         $user = JWTAuth::authenticate($request->token);
 
         return response()->json(['user' => $user]);
-    }
-
-    public function admin()
-    {
-        dd("OIii");
     }
 }
