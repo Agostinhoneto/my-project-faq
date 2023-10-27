@@ -11,13 +11,12 @@ class RoleController extends Controller
 
     public function __construct()
     {
-       // $this->middleware('can:create role')->only('create');
     }
 
 
     public function index()
     {
-        return  Role::get();        
+        return  Role::get();
     }
 
     public function attachUserRole($userId,$role)
@@ -25,7 +24,7 @@ class RoleController extends Controller
         $user = User::find($userId)->first();
         $roleId =  Role::where('name',$role)->first();
         $user->roles()->attach($roleId);
-        return $user;       
+        return $user;
     }
 
     public function getUserRole($userId)
@@ -38,7 +37,7 @@ class RoleController extends Controller
         $parameters = $request->only('permission','role');
         $permissionParam = $parameters['permission'];
         $roleParam = $parameters['role'];
-       
+
         $role = Role::where('name',$roleParam)->first();
         $permission = Permission::where('name',$permissionParam)->first();
         $role->attachPermission($permission);
@@ -59,7 +58,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-   
+
     /**
      * Show the form for creating a new resource.
      *
@@ -70,7 +69,7 @@ class RoleController extends Controller
 
     }
 
- 
+
     /**
      * Display the specified resource.
      *

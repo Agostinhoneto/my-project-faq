@@ -26,7 +26,7 @@ class FilialEmpresaController extends Controller
             $result['data'] = $this->filialEmpresaService->getAll($limit);
             return response()->json([Messages::SUCCESS_MESSAGE,HttpStatusCodes::OK]);
         } catch (Exception $e) {
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
         }
     }
 
@@ -36,7 +36,7 @@ class FilialEmpresaController extends Controller
             $result['data'] = $this->filialEmpresaService->getById($id);
             return response()->json([Messages::SUCCESS_MESSAGE,HttpStatusCodes::OK]);
         } catch (Exception $e) {
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
         }
     }
 
@@ -66,9 +66,8 @@ class FilialEmpresaController extends Controller
             DB::commit();
             return response()->json([Messages::SAVE_MESSAGE,HttpStatusCodes::OK]);
         } catch (Exception $e) {
-            dd($e);
             DB::roolBack();
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
         }
     }
 
@@ -98,7 +97,7 @@ class FilialEmpresaController extends Controller
             return response()->json([Messages::UPDATE_MESSAGE,HttpStatusCodes::OK]);
         } catch (Exception $e) {
             DB::roolBack();
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
         }
     }
 
@@ -112,7 +111,7 @@ class FilialEmpresaController extends Controller
             return response()->json([Messages::DELETE_MESSAGE,HttpStatusCodes::OK]);
         } catch (Exception $e) {
             DB::roolBack();
-            return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
+            Log::error($e->getMessage());
         }
     }
 }

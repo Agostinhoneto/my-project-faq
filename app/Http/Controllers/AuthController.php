@@ -24,7 +24,6 @@ class AuthController extends Controller
 
     public function __construct(private UserService $userService)
     {
-    //   $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     public function index(){
@@ -34,7 +33,6 @@ class AuthController extends Controller
         }
         catch(Exception $e) {
             Log::error($e->getMessage());
-           //return response()->json([],Reponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -45,14 +43,7 @@ class AuthController extends Controller
         }
         catch(Exception $e){
             Log::error($e->getMessage());
-              /*
-            $result = [
-                'status' =>Response::HTTP_INTERNAL_SERVER_ERROR,
-                'error' => $e->getMessage()
-            ];
-            */
         }
-       // return response()->json($result,$result['status']);
     }
 
     public function register(UserFormRequest $request)
@@ -87,10 +78,7 @@ class AuthController extends Controller
         try {
             $result['data'] = $this->userService->update($id,$name,$email,$password);
         } catch(Exception $e) {
-            $result = [
-                'status' =>Response::HTTP_INTERNAL_SERVER_ERROR,
-                'error' => $e->getMessage()
-            ];
+            Log::error($e->getMessage());
         }
         return response()->json($result,$result['status']);
     }
@@ -101,10 +89,7 @@ class AuthController extends Controller
             $result['data'] = $this->userService->deleteById($id);
         }
         catch(Exception $e) {
-           return response()->json([
-                	'success' => false,
-                	'message' => 'nao foi possivel excluir Usuario'. '$erro',
-                ]);
+            Log::error($e->getMessage());
         }
         return response()->json($result,$result['status']);
     }
@@ -131,11 +116,8 @@ class AuthController extends Controller
                 'success' => true,
                 'message' => 'User has been logged out'
             ]);
-        } catch (ExceptionsJWTException $exception) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, user cannot be logged out'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (ExceptionsJWTException $e) {
+            Log::error($e->getMessage());
         }
     }
 
@@ -144,9 +126,7 @@ class AuthController extends Controller
         $this->validate($request, [
             'token' => 'required'
         ]);
-
         $user = JWTAuth::authenticate($request->token);
-
         return response()->json(['user' => $user]);
     }
 }

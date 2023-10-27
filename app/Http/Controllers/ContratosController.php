@@ -24,7 +24,6 @@ class ContratosController extends Controller
             return response()->json($result['data'], [Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
             Log::error($e->getMessage());
-           // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -38,7 +37,6 @@ class ContratosController extends Controller
             return response()->json($result['data'], [Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -67,8 +65,6 @@ class ContratosController extends Controller
         } catch (Exception $e) {
             DB::roolBack();
             Log::error($e->getMessage());
-
-          //  return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -81,7 +77,6 @@ class ContratosController extends Controller
         $data_fim                  = $request->input('data_fim');
         $empresa_id                = $request->input('empresa_id');
         $status                    = $request->input('status');
-
 
         DB::beginTransaction();
         try {
@@ -99,7 +94,6 @@ class ContratosController extends Controller
         } catch (Exception $e) {
             DB::roolBack();
             Log::error($e->getMessage());
-           // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -114,7 +108,6 @@ class ContratosController extends Controller
         } catch (Exception $e) {
             DB::roolBack();
             Log::error($e->getMessage());
-           // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 }

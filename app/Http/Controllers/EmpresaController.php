@@ -24,7 +24,6 @@ class EmpresaController extends Controller
     public function __construct(private EmpresaService $empresaService)
     {
         $this->empresaService = $empresaService;
-        //$this->middleware('auth:api', ['except' => ['login']]);
     }
 
     public function index()
@@ -35,8 +34,6 @@ class EmpresaController extends Controller
             return response()->json($result['data'],[Messages::SUCCESS_MESSAGE, HttpStatusCodes::OK]);
         } catch (Exception $e) {
             Log::error($e->getMessage());
-
-          //  return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -49,8 +46,6 @@ class EmpresaController extends Controller
             }
         } catch (Exception $e) {
             Log::error($e->getMessage());
-
-           // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -90,8 +85,6 @@ class EmpresaController extends Controller
         } catch (Exception $e) {
             DB::roolBack();
             Log::error($e->getMessage());
-
-           // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -130,7 +123,6 @@ class EmpresaController extends Controller
         } catch (Exception $e) {
             DB::roolBack();
             Log::error($e->getMessage());
-            // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 
@@ -145,7 +137,6 @@ class EmpresaController extends Controller
         } catch (Exception $e) {
             DB::roolBack();
             Log::error($e->getMessage());
-            // return response()->json([Messages::ERROR_MESSAGE, HttpStatusCodes::INTERNAL_SERVER_ERROR]);
         }
     }
 }
