@@ -31,10 +31,8 @@ class UserController extends Controller
             $result['data'] = $this->userService->getAll();
         }
         catch(Exception $e){
-            $result = [
-                'status' => 500,
-                'error' =>$e->getMessage()
-            ];
+            DB::roolBack();
+            Log::error($e->getMessage());
         }
         return response()->json($result,$result['status']);
     }
@@ -45,10 +43,8 @@ class UserController extends Controller
             $result['data'] = $this->userService->getById($id);
         }
         catch(Exception $e){
-            $result = [
-                'status' =>500,
-                'error' => $e->getMessage()
-            ];
+            DB::roolBack();
+            Log::error($e->getMessage());
         }
         return response()->json($result,$result['status']);
     }
@@ -67,19 +63,19 @@ class UserController extends Controller
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
-
+        $status = $request->input('status');
 
         $result = ['status' =>200];
         try{
             $result['data'] =  $this->userService->register(
             $name,
             $email,
-            $password);
+            $password,
+            $status,
+        );
         }catch(Exception $e){
-            return response()->json([
-                'success' => false,
-                'message' => 'não foi possível criar email.',
-            ], 500);
+            DB::roolBack();
+            Log::error($e->getMessage());
         }
         return response()->json($result,$result['status']);
     }
@@ -90,14 +86,14 @@ class UserController extends Controller
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Crypt::encryptString('password');
+        $status = $request->input('status');
+
         $result = ['status' =>200];
         try{
             $result['data'] = $this->userService->update($id,$name,$email,$password);
         }catch(Exception $e){
-            $result = [
-                'status' => 500,
-                'error' => $e->getMessage()
-            ];
+            DB::roolBack();
+            Log::error($e->getMessage());
         }
         return response()->json($result,$result['status']);
     }
@@ -107,10 +103,8 @@ class UserController extends Controller
         try{
             $result['data'] = $this->userService->deleteById($id);
         }catch(Exception $e){
-           return response()->json([
-                	'success' => false,
-                	'message' => 'não foi possível criar Email.',
-                ], 500);
+            DB::roolBack();
+            Log::error($e->getMessage());
         }
         return response()->json($result,$result['status']);
     }

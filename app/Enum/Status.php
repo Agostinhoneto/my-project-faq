@@ -6,5 +6,3 @@ enum Status: string
     case A = "Ativo";
     case I = "Inativo";
 }
-
-?>

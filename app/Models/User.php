@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable, HasRoles ,HasApiTokens;
-   
+
 
 
     /**
@@ -24,6 +24,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'status',
     ];
 
     /**
@@ -44,11 +45,11 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-   
+
     public function roles(){
         return $this->belongsToMany(Role::class,'user_role');
     }
-    
+
     public function groups(){
         return $this->belongsToMany(Group::class,'user_group');
     }
@@ -73,7 +74,7 @@ class User extends Authenticatable implements JWTSubject
         return [
         ];
     }
-    
+
     public function isAdmin():bool
     {
         return $this->roles()->where('name','admin')->exists();
