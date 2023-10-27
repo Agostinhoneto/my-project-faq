@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('valor', 10, 2);
             $table->date('data_inicio');
             $table->date('data_fim');
-            $table->boolean('status')->default(1);
+            $table->enum('status', ['A','I']);
             $table->unsignedBigInteger('usuario_cadastrante_id');
             $table->foreign('usuario_cadastrante_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('usuario_modificante_id');
